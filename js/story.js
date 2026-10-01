@@ -64,7 +64,7 @@ export class StoryView {
 
   open(index, { chapter = null, x = innerWidth / 2, replace = false } = {}) {
     const s = this.stories[index];
-    if (!s) return;
+    if (!s || s.kind === 'light') return;
     this.origin = x;
     const hash = `#/story/${encodeURIComponent(s.id)}` + (chapter != null ? `/${chapter + 1}` : '');
     if (location.hash === hash) return this.route();
@@ -79,12 +79,12 @@ export class StoryView {
   step(d) {
     const routes = this.stories.filter(s => s.id.startsWith('route-')).sort((a,b) => a.id.localeCompare(b.id));
     const current = routes.findIndex(s => s.title === this.stories[this.index].title);
-    this.open(routes.length && current >= 0 ? routes[mod(current + d, routes.length)].line : mod(this.index + d, this.stories.length), { replace: true });
+    this.open(routes.length && current >= 0 ? routes[mod(current + d, routes.length)].line : this.stories.filter(s => s.kind !== 'light')[mod(this.stories.filter(s => s.kind !== 'light').findIndex(s => s.line === this.index) + d, this.stories.filter(s => s.kind !== 'light').length)].line, { replace: true });
   }
   route() {
     const m = location.hash.match(/^#\/story\/([^/]+)(?:\/(\d+))?/);
     const index = m ? this.stories.findIndex(s => s.id === decodeURIComponent(m[1])) : -1;
-    if (index < 0) return this.hide();
+    if (index < 0 || this.stories[index].kind === 'light') return this.hide();
     this.show(index, m[2] ? +m[2] - 1 : null);
   }
 
@@ -171,9 +171,12 @@ export class StoryView {
     this.index = index;
     this.el.style.setProperty('--accent', s.rgb);
     this.title.textContent = s.title;
+    document.getElementById('chapter-note-body').innerHTML = `<h2>${esc(s.title)}</h2><time>${esc(s.period || '')}</time><p>${esc(s.intro || '')}</p>${(s.events || []).map(e => `<p class="chapter-event"><time>${esc(e.date)}</time> ${esc(e.title)}</p>`).join('')}`;
+    document.querySelector('.chapter-note').open = false;
+    document.getElementById('chapter-context-body').innerHTML = `<h2>${esc(s.title)}</h2><time>${esc(s.period || '')}</time><p>${esc(s.intro || '')}</p><p class="boundary-note">${esc(s.boundary || '')}</p>${s.source ? `<a href="${esc(s.source)}" target="_blank" rel="noopener">分期参考：石仲泉长征五阶段研究 ↗</a><small>章节名称为作品艺术命名；不是统一官方分期。</small>` : ''}`;
     const routes = this.stories.filter(s => s.id.startsWith('route-')).sort((a,b) => a.id.localeCompare(b.id));
     const r = routes.findIndex(t => t.title === s.title);
-    const pv = r >= 0 ? routes[mod(r - 1, routes.length)] : this.stories[mod(index - 1, n)], nx = r >= 0 ? routes[mod(r + 1, routes.length)] : this.stories[mod(index + 1, n)];
+    const pv = r >= 0 ? routes[mod(r - 1, routes.length)] : routes[0], nx = r >= 0 ? routes[mod(r + 1, routes.length)] : routes[0];
     this.prev.style.setProperty('--c', pv.rgb); this.prev.setAttribute('aria-label', `上一个故事：${pv.title}`);
     this.next.style.setProperty('--c', nx.rgb); this.next.setAttribute('aria-label', `下一个故事：${nx.title}`);
     // Top to bottom the newest moment comes first, so as the column flows down the story plays forward.
@@ -210,6 +213,7 @@ export class StoryView {
           ${c.date ? `<span class="date">${esc(c.date)}</span>` : ''}
           ${c.caption ? `<h2>${esc(c.caption)}</h2>` : ''}
           ${c.text ? `<p>${esc(c.text)}</p>` : ''}
+          ${c.material ? `<p class="material-note">${esc(c.material)}</p>` : ''}
           ${c.source ? `<a class="source-link" href="${esc(c.source)}" target="_blank" rel="noopener noreferrer">查看图片与资料出处 ↗</a>` : ''}
         </div>` : ''}`;
       this.strip.appendChild(el);
@@ -226,7 +230,7 @@ export class StoryView {
       y += H + gap;
       return it;
     });
-    this.cycle = y;
+    this.cycle = Math.max(y, vh + (this.items[0]?.H || 0));
     // One node per distinct photograph; modulo positions loop the complete gallery.
     this.nodes = this.items.map(it => ({ el: it.el, frame: it.el.querySelector('.frame'), entry: it.el.querySelector('.entry'), base: it.y0, h: it.H, i: it.i, y: 0 }));
     const side = beside ? Math.min(vw * 0.5 - 28, base / 2 + gutter + textW + 44) : Math.min(vw * 0.5 - 28, base / 2 + clamp(vw * 0.12, 56, 200));
@@ -237,7 +241,7 @@ export class StoryView {
   // Put moment `i` in the middle of the screen.
   centre(i, animate) {
     const it = this.items.find(t => t.i === i) ?? this.items[0];
-    const want = innerHeight / 2 - it.H / 2 - it.y0;
+    const want = this.stories[this.index]?.kind === 'poem' ? 285 - it.y0 : innerHeight / 2 - it.H / 2 - it.y0;
     this.target = want;
     if (!animate) this.offset = this.target;
   }

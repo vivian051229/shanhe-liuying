@@ -15,7 +15,7 @@ export async function loadTextures(gl, photos, onProgress) {
   const scratch = document.createElement('canvas'); scratch.width = scratch.height = LAYER;
   const ctx = scratch.getContext('2d'); ctx.imageSmoothingQuality = 'high';
   // Initialize neutral images so the curtain can render before downloads complete.
-  ctx.fillStyle = '#5c4438';ctx.fillRect(0,0,LAYER,LAYER);
+  ctx.fillStyle = '#160d0b';ctx.fillRect(0,0,LAYER,LAYER);
   for(let i=0;i<photos.length;i++) gl.texSubImage3D(gl.TEXTURE_2D_ARRAY,0,0,0,i,LAYER,LAYER,1,gl.RGBA,gl.UNSIGNED_BYTE,scratch);
   let done = 0;
   const queue = photos.map((_, i) => i);

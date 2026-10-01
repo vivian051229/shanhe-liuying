@@ -10,14 +10,22 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <canvas id="stream" tabindex="0" aria-label="长征红色光瀑。每条光线都承载长征故事。左右方向键选择，回车进入；滚轮或双指缩放。"></canvas>
+  <section id="opening" aria-labelledby="opening-title">
+    <i class="opening-line" aria-hidden="true"></i><p class="opening-eyebrow">1934 — 1936 / 一场循光而行的历史阅读</p>
+    <h2 id="opening-title"><img src="assets/branding/shanhe-title.png" alt="山河留影" width="2170" height="725"></h2>
+    <p class="opening-subtitle">长征历史影像交互叙事</p>
+    <p class="opening-poem">照片留住瞬间，光线串起征程。<br>请以手触光，穿过历史的山河，<br>走近那些真实的面孔与足迹。</p>
+    <button id="enter-stream" disabled>正在点亮光线…</button>
+    <small>点击影像光线，阅读长征历史与故事</small>
+  </section>
+  <canvas id="stream" tabindex="0" aria-label="长征红色光瀑。点击有影像的光线阅读长征故事。左右方向键选择，回车进入；滚轮或双指缩放。"></canvas>
   <p id="error" role="alert" hidden></p>
   <div id="loader" aria-hidden="true"><i></i></div>
   <div id="meter" aria-hidden="true"><i></i></div>
   <div id="cursor" aria-hidden="true"></div>
   <p id="announce" class="sr-only" aria-live="polite"></p>
 
-  <header class="masthead"><h1><img class="title-lettering" src="assets/branding/shanhe-title.png" alt="山河留影" width="2170" height="725"></h1><small>一部流动的长征影像集</small><span class="masthead-years">1934 — 1936</span><p>滚轮拉近光瀑，点击光线阅读图文<br>长征影像、沿线实景与馆藏</p></header>
+  <header class="masthead"><h1><img class="title-lettering" src="assets/branding/shanhe-title.png" alt="山河留影" width="2170" height="725"></h1><small>长征历史影像交互叙事</small><span class="masthead-years">1934 — 1936</span><p>滚轮拉近光瀑，点击光线阅读图文<br>历史影像 · 事件 · 诗词</p></header>
   <nav class="route-nav" aria-label="长征路线章节"></nav>
   <section id="story" role="dialog" aria-modal="true" aria-labelledby="story-title" hidden>
     <div class="story-backdrop" aria-hidden="true"></div>
@@ -28,6 +36,7 @@
     <button class="story-back" type="button" aria-label="返回红色光瀑">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6.5 10.5 12 5l5.5 5.5"/></svg>
     </button>
+    <aside class="chapter-context" aria-label="本章时间与叙事依据"><div id="chapter-context-body"></div></aside><details class="chapter-note"><summary>完整时间线</summary><div id="chapter-note-body"></div></details>
     <p class="story-title" id="story-title"></p>
     <div class="lightbox" hidden>
       <img alt="">
@@ -35,6 +44,7 @@
     </div>
   </section>
 
+  <details class="narrative-note"><summary>叙事依据</summary><div>五章以长征进程中的战略转向、北上决策、落脚陕北与主力会师为边界。参考石仲泉《红军长征的基本内涵和红军长征史研究的若干问题》提出的五阶段研究框架，章节名为本作品的艺术命名。这是学者的研究划分，并非统一的官方分期。<a href="https://www.dswxyjy.org.cn/n1/2016/0929/c218998-28749730.html" target="_blank" rel="noopener">阅读分期依据 ↗</a></div></details>
   <script type="module" src="./js/app.js"></script>
 </body>
 </html>

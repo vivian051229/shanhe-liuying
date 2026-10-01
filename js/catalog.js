@@ -43,7 +43,7 @@ export function validateCatalog(catalog, data) {
   if (!Array.isArray(journal) || journal.some(entry => !entry || typeof entry !== 'object')) {
     fail('journal must be an array of date/text entries.');
   }
-  return { photos, authored, journal };
+  return { photos, authored, journal, curated: data.curated === true, poetry: data.poetry ?? [] };
 }
 
 export async function loadCatalog() {

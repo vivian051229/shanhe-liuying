@@ -4,11 +4,16 @@ export const MAX_CHAPTERS = 8;
 
 // Every thread gets a story. Authored stories in stories.json claim their lines; every other
 // line is a placeholder drawn from the photographs, repeats welcome.
-export function buildStories(photos, authored = [], journal = []) {
+export function buildStories(photos, authored = [], journal = [], curated = false) {
   const stories = new Array(NF);
   for (const s of authored) stories[s.line] = { ...s };
   for (let i = 0; i < NF; i++) {
     if (stories[i]) continue;
+    if (curated) {
+      // Sparse, authored fibres: blank light holds the space between unique stories.
+      stories[i] = { id: `line-${i + 1}`, line: i, kind: 'light', title: '光', chapters: [], gallery: [] };
+      continue;
+    }
     const source = authored.length ? authored[i % authored.length] : null;
     const all = source?.gallery ?? photos.map(p => ({ photo: p.id, caption: p.description }));
     const start = (i * 7) % all.length;
@@ -20,8 +25,9 @@ export function buildStories(photos, authored = [], journal = []) {
   for (const s of stories) {
     const hydrate = c => {
       const layer = byId.get(String(c.photo)), p = photos[layer];
-      return { ...c, layer, src: p.src, aspect: p.aspect, caption: c.caption ?? p.description, credit: c.credit ?? p.photographer, date: c.date ?? p.date, text: c.text ?? p.text, source: p.source_page, material: p.material_type };
+      return { ...c, layer, src: p.src, aspect: p.aspect, caption: c.caption ?? p.description, credit: c.credit ?? p.photographer, date: c.date ?? p.date, text: c.text ?? p.text, source: p.source_page, material: p.material_type, kind: p.kind };
     };
+    if (s.kind === 'light') { s.col = [.36, .045, .085]; s.rgb = '92 11 22'; continue; }
     s.chapters = s.chapters.map(hydrate);
     if (s.gallery) s.gallery = s.gallery.map(hydrate);
     // Journal entries: authored text wins; otherwise the shared template, spread so that every
@@ -49,6 +55,6 @@ function colourStory(s, photos) {
   const S = clamp(sat * 1.9 + 0.2, 0.45, 0.9), L = 0.62;
   const C = (1 - Math.abs(2 * L - 1)) * S, X = C * (1 - Math.abs((h % 2) - 1)), m = L - C / 2;
   const [rr, gg, bb] = h < 1 ? [C, X, 0] : h < 2 ? [X, C, 0] : h < 3 ? [0, C, X] : h < 4 ? [0, X, C] : h < 5 ? [X, 0, C] : [C, 0, X];
-  s.col = [1, .22 + .06 * (s.line % 3), .13];
+  s.col = [.58, .12, .18];
   s.rgb = s.col.map(v => Math.round(v * 255)).join(' ');
 }

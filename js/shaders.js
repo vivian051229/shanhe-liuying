@@ -39,7 +39,7 @@ float h2(int a, int b){ return float(pcg(uint(a)*1664525u^pcg(uint(b)+1013904223
 export const FIBRE_VS = COMMON + NOISE + `
 layout(location=0) in vec2 aV;           // x: position along the fibre, y: side
 uniform highp sampler2D uStory;
-uniform vec3 uCam; uniform float uF, uAspect, uHpx, uMinPx, uMirror, uSpacing;
+uniform vec3 uCam; uniform float uF, uAspect, uHpx, uMinPx, uMirror, uSpacing, uW;
 uniform vec2 uSelect;                    // line, amount
 uniform float uIdleL[${IDLE}], uIdleA[${IDLE}];
 out float vU, vY, vX0, vSeed, vFlare, vSide, vHalfPx, vQuadPx, vNorm, vCl, vCl2, vSpacePx, vPpu, vXw;
@@ -62,7 +62,7 @@ void main(){
   if(uMirror>.5) p.y=-p.y;
   float depth=uCam.z-p.z;
   float ppu=uF*uHpx*.5/max(depth,1e-4);
-  float spacing=uSpacing*ppu;                         // px between neighbouring threads
+  float spacing=(st.x>0. ? uW : uSpacing)*ppu;                         // px between neighbouring threads
 
   // How much this thread is being looked at: pointed to, glimmering by itself, or chosen.
   float hov=abs(fi-uHover.x)<.5?uHover.y:0.;
@@ -71,7 +71,7 @@ void main(){
   vSel=abs(fi-uSelect.x)<.5?1.:0.;
 
   // Threads widen with zoom until each is exactly as wide as its photographs.
-  float frac=mix(.14,.8,ss(2.,24.,spacing));
+  float frac=st.x<=0. ? .018 : mix(.14,.8,ss(2.,24.,spacing));
   float halfPx=max(uMinPx*.5,frac*spacing*.5)+hov*.75*(1.-ss(3.,12.,spacing));
   float quadPx=halfPx+1.;
   float off=aV.y*quadPx/ppu;
@@ -100,13 +100,13 @@ void main(){
   float y=vY, cl=vCl, cl2=vCl2;
 
   // The curtain: crimson, drifting into vermilion where the light clouds gather.
-  vec3 blue=vec3(.95,.045,.025), violet=vec3(1.,.18,.06), ice=vec3(1.,.58,.28);
+  vec3 blue=vec3(.22,.035,.023), violet=vec3(.42,.065,.037), ice=vec3(.57,.30,.17);
   vec3 col=mix(blue,violet,ss(.5,.78,cl));
   float I=.38+.8*ss(.25,.85,cl)+.3*cl2;
   float pleat=.62+.38*(.55+.3*cos(vX0*2.7+.8)+.15*cos(vX0*6.3+2.1));
   I*=(.3+1.35*vSeed*vSeed)*pleat;
   I*=1.+1.4*exp(-(uCH-y)*3.2);
-  I*=1.+vFlare*1.3; col=mix(col,ice,vFlare*.45);
+  I*=1.+vFlare*.2; col=mix(col,ice,vFlare*.12);
   // Water: short bright specks and fine glitter sliding down each fibre.
   float q=(y+vFlowT*(.8+vSeed*.5))*5.5;
   float f=fract(q);
@@ -114,12 +114,12 @@ void main(){
   float q2=(y+vFlowT*(1.1+vSeed*.3))*21.;
   float glit=step(.93,h2(vId+7919,int(floor(q2))))*ss(.5,0.,abs(fract(q2)-.5));
   float calm=1.-ss(10.,60.,vSpacePx);                 // specks would be metres long up close
-  vec3 c=(col*I+ice*(speck*3.2+glit*.8)*(.3+cl)*calm)*vNorm*uGain;
-  c+=ice*ss(.97,1.,vU)*2.6*vNorm*uGain;
+  vec3 c=(col*I+ice*(speck*1.3+glit*.35)*(.3+cl)*calm)*vNorm*uGain;
+  c+=ice*ss(.97,1.,vU)*.35*vNorm*uGain;
 
   // The stream: this thread's story, one photograph after another, flowing down.
   float reveal=max(ss(2.,10.,vSpacePx),vHov);
-  if(reveal>.002 && vFlare<=0.){
+  if(reveal>.002 && vFlare<=0. && vN>0.){
     float sc=(uCH-y)-vPhase;
     float slot=floor(sc/uS), local=sc-slot*uS;
     int n=max(int(vN+.5),1);
@@ -151,6 +151,7 @@ void main(){
 
   float front=uIntro*8.5-1.;
   c*=ss(front,front-3.,uCH-y);
+  c*=vN>0. ? .8 : .22;
   c*=vHov>.01?1.:1.-uDim;
   c*=mix(1.-uSelect.y,1.+uSelect.y*1.2,vSel);
   if(uMirror>.5) c*=exp(-y*.3)*(.55+.45*cl2);
@@ -179,8 +180,8 @@ void main(){
   float edge=ss(uCW*.5+3.5,uCW*.5-1.5,abs(vP.x));
   float fore=exp(-max(vP.z,0.)*.36), back=exp(-max(-vP.z,0.)*1.4);
   float n=fbm(vP.xz*.28+vec2(uTime*.02,-uTime*.015));
-  vec3 c=mix(vec3(.72,.025,.015),vec3(1.,.14,.035),ss(.4,.75,n))*edge*fore*back*(.09+.07*n);
-  c+=vec3(1.,.36,.12)*exp(-pow(vP.z-1.,2.)*1.2)*edge*.06;
+  vec3 c=mix(vec3(.28,.018,.035),vec3(.5,.055,.08),ss(.4,.75,n))*edge*fore*back*(.09+.07*n);
+  c+=vec3(.55,.16,.16)*exp(-pow(vP.z-1.,2.)*1.2)*edge*.06;
   o=vec4(c*uGain*ss(1.2,3.,uIntro),0.);
 }`;
 

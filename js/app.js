@@ -57,6 +57,7 @@ const select = { line: -1, t: 0, target: 0 };
 const pluck = { line: -1, age: 99, amp: 0 };
 const idle = Array.from({ length: IDLE }, () => ({ line: -1, age: 99 }));
 let idleNext = 2.5;
+let poetryFibres = [];
 let flow = 1, paused = false, time = 0, intro = 0, lastInput = 0;
 let sleeping = false, last = performance.now(), zoomUntil = 0;
 let drag = null, pinch = null;
@@ -84,7 +85,7 @@ function project(x, y) {
 
 function buildFibres() {
   CW = clamp(CH * (W / H) * 0.8, 8.5, 22);
-  SPACING = CW / NF; PHOTO_W = 0.8 * SPACING; SLOT = 1.9 * PHOTO_W;
+  SPACING = CW / NF; PHOTO_W = CW / 11; SLOT = Math.max(4 * PHOTO_W, CH / 2 + 0.1);
   const rows = Math.ceil(NF / 1024), fs = new Float32Array(1024 * rows * 4);
   for (let i = 0; i < NF; i++) {
     fib.x0[i] = -CW / 2 + (i + 0.5 + (rng() - 0.5) * 0.2) * SPACING;
@@ -99,7 +100,7 @@ function uploadStories() {
   const data = new Float32Array(1024 * Math.ceil(NF * 3 / 1024) * 4);
   stories.forEach((s, i) => {
     const L = s.chapters.map(c => c.layer);
-    data.set([s.chapters.length, ...s.col], i * 12);
+    data.set([s.kind === 'poem' || s.id.startsWith('route-') ? 0 : s.chapters.length, ...s.col], i * 12);
     data.set([L[0] ?? 0, L[1] ?? 0, L[2] ?? 0, L[3] ?? 0, L[4] ?? 0, L[5] ?? 0, L[6] ?? 0, L[7] ?? 0], i * 12 + 4);
   });
   T.story = dataTexture(1024, Math.ceil(NF * 3 / 1024), data);
@@ -128,6 +129,7 @@ function pickLine(sx, sy) {
   const est = Math.round((p.x + CW / 2) / SPACING - 0.5), K = Math.min(80, Math.ceil(tol / SPACING) + 3);
   let best = -1, bd = Infinity;
   for (let k = Math.max(0, est - K); k <= Math.min(NF - 1, est + K); k++) {
+    if (stories[k]?.kind === 'light') continue;
     const d = Math.abs(fib.x0[k] + disp(k, y) - p.x);
     if (d < bd) { bd = d; best = k; }
   }
@@ -147,7 +149,7 @@ function chapterAt(i, y) {
 // ────────────────────────────────────────────────────────────── stories
 
 function openStory(i, { chapter = null, x = null } = {}) {
-  if (i < 0 || view.isOpen) return;
+  if (i < 0 || view.isOpen || stories[i]?.kind === 'light') return;
   const sx = x ?? project(fib.x0[i], CH * 0.5).x;
   pluck.line = i; pluck.age = 0; pluck.amp = 0.12 * motion;
   view.open(i, { chapter, x: clamp(sx, 0, W) });
@@ -244,7 +246,9 @@ addEventListener('keydown', e => {
   if (k === 'ArrowRight' || k === 'ArrowLeft') {
     e.preventDefault();
     const from = kbLine >= 0 ? kbLine : hover.line >= 0 ? hover.line : clamp(Math.round((unproject(W / 2, H / 2).x + CW / 2) / SPACING), 0, NF - 1);
-    kbLine = clamp(from + (k === 'ArrowRight' ? 1 : -1) * (e.shiftKey ? 25 : 1), 0, NF - 1);
+    const readable = stories.filter(s => s.kind !== 'light').map(s => s.line);
+    const next = k === 'ArrowRight' ? readable.find(i => i > from) : readable.filter(i => i < from).at(-1);
+    kbLine = next ?? (k === 'ArrowRight' ? readable[0] : readable.at(-1));
     announce(kbLine);
   } else if (k === 'Enter' && (kbLine >= 0 || hover.line >= 0)) {
     openStory(kbLine >= 0 ? kbLine : hover.line);
@@ -272,6 +276,22 @@ addEventListener('resize', () => { if (RT) resize(); });
 
 function step(dt, now) {
   intro += dt; time += dt;
+  for (const poem of poetryFibres) {
+    // Letters share the fibre's world coordinates and displacement, so zooming or
+    // parting the curtain moves the wire and every letter together.
+    const scale = Math.exp(cam.ls), worldStep = .225, topWorld = CH - .7;
+    const origin = project(fib.x0[poem.line], topWorld);
+    const size = scale * .165;
+    poem.el.style.left = `${origin.x}px`; poem.el.style.top = `${origin.y}px`;
+    poem.el.style.setProperty('--glyph-size', `${size}px`);
+    poem.el.style.height = `${scale * worldStep * poem.chars.length}px`;
+    poem.glyphs.forEach((glyph, j) => {
+      const wy = topWorld - j * worldStep;
+      const point = project(fib.x0[poem.line] + disp(poem.line, wy), wy);
+      glyph.style.left = `${point.x - origin.x}px`; glyph.style.top = `${point.y - origin.y}px`;
+    });
+    poem.el.style.opacity = String(smooth(1.4, 5, intro));
+  }
   const lsMin = LS_MIN(), lsMax = LS_MAX();
   cam.lsT = clamp(cam.lsT, lsMin, lsMax);
   cam.ls = damp(cam.ls, cam.lsT, 5.5, dt);
@@ -330,7 +350,7 @@ function step(dt, now) {
     // The thread under the hand eases to a stop: its photographs and its light hold still.
     fib.hold[i] += ((i === line ? 1 : 0) - fib.hold[i]) * kHold;
     const go = dt * rate * (1 - fib.hold[i]);
-    const period = SLOT * stories[i].chapters.length;
+    const period = Math.max(CH, SLOT * stories[i].chapters.length);
     fib.phase[i] = (fib.phase[i] + go * fib.speed[i]) % period;
     fib.flow[i] = (fib.flow[i] + go) % 4000;
     dyn[i * 4] = fib.o[i]; dyn[i * 4 + 1] = fib.py[i]; dyn[i * 4 + 2] = fib.phase[i]; dyn[i * 4 + 3] = fib.flow[i];
@@ -493,17 +513,33 @@ async function boot() {
   const nav = document.querySelector('.route-nav');
   for (const story of catalog.authored) {
     if (story.nav_hidden) continue;
-    const a = document.createElement('a'); a.href = '#/story/' + encodeURIComponent(story.id); a.textContent = story.nav_title ?? story.title; nav.appendChild(a);
+    const a = document.createElement('a'); a.href = '#/story/' + encodeURIComponent(story.id); a.innerHTML = `<b>${story.nav_title ?? story.title}</b><time>${story.period ?? ''}</time>`; nav.appendChild(a);
   }
   arrTex = await loadTextures(gl, photos, progress => $loader.style.setProperty('--p', progress.toFixed(3)));
   buildFibres();
-  stories = buildStories(photos, catalog.authored, catalog.journal);
+  stories = buildStories(photos, catalog.authored, catalog.journal, catalog.curated);
   uploadStories();
+  const poetryLayer = document.createElement('div'); poetryLayer.className = 'poetry-layer'; document.body.appendChild(poetryLayer);
+  poetryFibres = (catalog.poetry || []).map((poem, k) => {
+    const el = document.createElement('button'); el.type = 'button'; el.className = 'hanging-poem';
+    el.setAttribute('aria-label', `${poem.author}《${poem.title}》，点击阅读全文`);
+    const chars = [...poem.text.replace(/[，。？、\s]/g, '')];
+    el.innerHTML = `<span class="poem-wire"></span><span class="poem-glyphs">${chars.map(c => `<span>${c}</span>`).join('')}</span>`;
+    el.addEventListener('click', () => openStory(poem.line)); poetryLayer.appendChild(el);
+    return { ...poem, el, chars, glyphs: [...el.querySelectorAll('.poem-glyphs > span')] };
+  });
 
   cam.x = 0; cam.y = HOME_Y; cam.lsT = LS_MIN(); cam.ls = cam.lsT - 0.25;
   view = new StoryView({ stories, onShow: onStoryShow, onCovered: onStoryCovered, onHide: onStoryHide });
   // Keep the original short loading stroke before the waterfall reveal.
   if (!REDUCED) await new Promise(resolve => setTimeout(resolve, Math.max(0, 1700 - (performance.now() - openingStarted))));
+  const opening = document.getElementById('opening');
+  if (!location.hash.startsWith('#/story/')) {
+    document.getElementById('enter-stream').disabled = false;
+    document.getElementById('enter-stream').textContent = '循光而入';
+    await new Promise(resolve => document.getElementById('enter-stream').addEventListener('click', resolve, { once: true }));
+  }
+  opening.hidden = true;
   body.classList.add('ready');
   last = performance.now();
   requestAnimationFrame(frame);
