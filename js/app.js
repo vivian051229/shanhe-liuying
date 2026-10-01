@@ -274,17 +274,14 @@ addEventListener('resize', () => { if (RT) resize(); });
 
 // ────────────────────────────────────────────────────────────── frame
 
-const mosaicCaption = document.createElement('div');
-mosaicCaption.className = 'mosaic-caption'; mosaicCaption.hidden = true;
-document.body.appendChild(mosaicCaption);
 function step(dt, now) {
   intro += dt; time += dt;
   for (const poem of poetryFibres) {
     // Letters share the fibre's world coordinates and displacement, so zooming or
     // parting the curtain moves the wire and every letter together.
-    const scale = Math.exp(cam.ls), worldStep = .225, topWorld = CH - .7;
+    const scale = Math.exp(cam.ls), worldStep = PHOTO_W * 2.5, topWorld = HOME_Y + poem.chars.length * worldStep / 2;
     const origin = project(fib.x0[poem.line], topWorld);
-    const size = scale * .165;
+    const size = scale * PHOTO_W * 1.8;
     poem.el.style.left = `${origin.x}px`; poem.el.style.top = `${origin.y}px`;
     poem.el.style.setProperty('--glyph-size', `${size}px`);
     poem.el.style.height = `${scale * worldStep * poem.chars.length}px`;
@@ -328,16 +325,6 @@ function step(dt, now) {
   if (line >= 0) hover.line = line;
   hover.t = line >= 0 ? damp(hover.t, 1, 9, dt) : damp(hover.t, 0, 5, dt);
   if (hover.t < 0.01 && line < 0) hover.line = -1;
-  const showCaption = line >= 0 && PHOTO_W * scale > 42 && !view.isOpen && stories[line].kind !== 'poem';
-  mosaicCaption.hidden = !showCaption;
-  if (showCaption) {
-    const at = unproject(pointer.inside ? pointer.x : W / 2, pointer.inside ? pointer.y : H / 2);
-    const c = stories[line].chapters[chapterAt(line, at.y)];
-    const pt = project(fib.x0[line] + disp(line, at.y), at.y);
-    mosaicCaption.textContent = [c.date, c.caption].filter(Boolean).join(' · ');
-    mosaicCaption.style.left = `${pt.x}px`; mosaicCaption.style.top = `${pt.y}px`;
-    mosaicCaption.style.width = `${Math.max(140, Math.min(360, PHOTO_W * scale))}px`;
-  }
 
   // The hand in the curtain: threads part around the one being pointed at and swing back.
   const moved = pointer.lastX < 0 ? 0 : (pointer.x - pointer.lastX);

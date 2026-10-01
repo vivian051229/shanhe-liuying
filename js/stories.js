@@ -12,6 +12,11 @@ export function buildStories(photos, authored = [], journal = [], curated = fals
     if (curated) {
       // The close-up mosaic repeats the collection visually; chapter galleries retain
       // their unique photographs and factual metadata.
+      const poemLine = authored.find(s => s.kind === 'poem' && Math.abs(s.line - i) <= 2);
+      if (poemLine) {
+        stories[i] = { id: `line-${i + 1}`, line: i, kind: 'light', title: '光', chapters: [], gallery: [] };
+        continue;
+      }
       const routes = authored.filter(s => s.id.startsWith('route-'));
       const source = routes[Math.min(routes.length - 1, Math.floor(i * routes.length / NF))];
       const all = source.gallery ?? source.chapters;
