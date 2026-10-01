@@ -239,3 +239,13 @@ body:not(.ready) #loader i{animation:loading-stroke 1.6s cubic-bezier(.2,.75,.15
 .poem-glyphs{position:absolute;inset:0;display:block}.poem-glyphs>span{position:absolute;transform:translate(-50%,-50%);line-height:1;height:auto;white-space:nowrap}.hanging-poem{width:calc(var(--glyph-size)*1.3);transform:none}.poem-wire{display:none}
 
 #opening h2 img{filter:brightness(0) invert(1)}
+
+/* A quiet but unmistakable invitation into the light curtain. */
+#enter-stream{position:relative;min-width:164px;text-align:left;padding:12px 38px 12px 0;border-bottom-color:#a88b69;transition:color .25s,border-color .25s,background .25s,box-shadow .25s}
+#enter-stream::after{content:"↗";position:absolute;right:4px;top:50%;transform:translateY(-50%);font:22px/1 var(--serif);opacity:.75;transition:transform .25s,opacity .25s}
+#enter-stream:not(:disabled):hover,#enter-stream:focus-visible{color:#fff5e4;border-bottom-color:#f0d6aa;background:linear-gradient(90deg,transparent,rgba(193,148,90,.09));box-shadow:0 9px 18px -14px #e2b87a}
+#enter-stream:not(:disabled):hover::after,#enter-stream:focus-visible::after{opacity:1;transform:translate(4px,calc(-50% - 3px))}
+#enter-stream:focus-visible{outline:1px solid #c9aa7b;outline-offset:8px}
+#enter-stream:disabled::after{opacity:0}
+#enter-stream:not(:disabled):active{color:#d8bc92;transform:translateY(1px)}
+@media(prefers-reduced-motion:reduce){#enter-stream,#enter-stream::after{transition:none}}
