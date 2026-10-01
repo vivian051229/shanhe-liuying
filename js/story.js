@@ -173,7 +173,7 @@ export class StoryView {
     this.title.textContent = s.title;
     document.getElementById('chapter-note-body').innerHTML = `<h2>${esc(s.title)}</h2><time>${esc(s.period || '')}</time><p>${esc(s.intro || '')}</p>${(s.events || []).map(e => `<p class="chapter-event"><time>${esc(e.date)}</time> ${esc(e.title)}</p>`).join('')}`;
     document.querySelector('.chapter-note').open = false;
-    document.getElementById('chapter-context-body').innerHTML = `<h2>${esc(s.title)}</h2><time>${esc(s.period || '')}</time><p>${esc(s.intro || '')}</p><p class="boundary-note">${esc(s.boundary || '')}</p>${s.source ? `<a href="${esc(s.source)}" target="_blank" rel="noopener">分期参考：石仲泉长征五阶段研究 ↗</a><small>章节名称为作品艺术命名；不是统一官方分期。</small>` : ''}`;
+    document.getElementById('chapter-context-body').innerHTML = `<h2>${esc(s.title)}</h2><time>${esc(s.period || '')}</time><p>${esc(s.intro || '')}</p><p class="boundary-note">${esc(s.boundary || '')}</p>${s.source ? `<a href="${esc(s.source)}" target="_blank" rel="noopener">分期参考：石仲泉长征五阶段研究 ↗</a>` : ''}`;
     const routes = this.stories.filter(s => s.id.startsWith('route-')).sort((a,b) => a.id.localeCompare(b.id));
     const r = routes.findIndex(t => t.title === s.title);
     const pv = r >= 0 ? routes[mod(r - 1, routes.length)] : routes[0], nx = r >= 0 ? routes[mod(r + 1, routes.length)] : routes[0];
