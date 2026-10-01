@@ -118,7 +118,7 @@ void main(){
   c+=ice*ss(.97,1.,vU)*.35*vNorm*uGain;
 
   // The stream: this thread's story, one photograph after another, flowing down.
-  float reveal=max(ss(2.,10.,vSpacePx),vHov);
+  float reveal=ss(8.,70.,vSpacePx);
   if(reveal>.002 && vFlare<=0. && vN>0.){
     float sc=(uCH-y)-vPhase;
     float slot=floor(sc/uS), local=sc-slot*uS;
@@ -131,7 +131,7 @@ void main(){
     float h=uW/aspect;
     float vp=(local-(uS-h)*.5)/h, up=.5+vXw/uW;
     float slotPx=uS*vPpu;
-    float detail=ss(1.2,5.,slotPx);
+    float detail=ss(12.,100.,slotPx);
     vec3 st=vCol*(.5+.35*cl);
     float inside=0., core=1.;
     if(detail>.001){
