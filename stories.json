@@ -1,0 +1,911 @@
+{
+  "journal": [],
+  "stories": [
+    {
+      "id": "route-01",
+      "title": "征途初起",
+      "line": 100,
+      "chapters": [
+        {
+          "photo": "longmarch-01-01"
+        },
+        {
+          "photo": "longmarch-01-02"
+        },
+        {
+          "photo": "longmarch-01-03"
+        },
+        {
+          "photo": "longmarch-02-01"
+        },
+        {
+          "photo": "longmarch-02-02"
+        },
+        {
+          "photo": "longmarch-02-03"
+        },
+        {
+          "photo": "routephoto-81e37a16bad5"
+        },
+        {
+          "photo": "routephoto-84454d7f82c7"
+        }
+      ],
+      "gallery": [
+        {
+          "photo": "longmarch-01-01"
+        },
+        {
+          "photo": "longmarch-01-02"
+        },
+        {
+          "photo": "longmarch-01-03"
+        },
+        {
+          "photo": "longmarch-02-01"
+        },
+        {
+          "photo": "longmarch-02-02"
+        },
+        {
+          "photo": "longmarch-02-03"
+        },
+        {
+          "photo": "routephoto-81e37a16bad5"
+        },
+        {
+          "photo": "routephoto-84454d7f82c7"
+        },
+        {
+          "photo": "routephoto-fc4cff10290a"
+        },
+        {
+          "photo": "routephoto-9b4bd8f56a94"
+        },
+        {
+          "photo": "routephoto-93920d21796c"
+        },
+        {
+          "photo": "routephoto-e0ad8f6ba356"
+        },
+        {
+          "photo": "routephoto-d8bf692d787a"
+        },
+        {
+          "photo": "routephoto-17e5e78dd5cc"
+        },
+        {
+          "photo": "routephoto-8a8ffae8d37c"
+        },
+        {
+          "photo": "routephoto-0d93e1f525d1"
+        },
+        {
+          "photo": "routephoto-7d116afe5421"
+        },
+        {
+          "photo": "routephoto-92885b962968"
+        },
+        {
+          "photo": "routephoto-7cf9abdcf5ac"
+        },
+        {
+          "photo": "routephoto-4b78d00c68eb"
+        },
+        {
+          "photo": "routephoto-9274cf35747d"
+        },
+        {
+          "photo": "routephoto-30f9eb8f1644"
+        },
+        {
+          "photo": "routephoto-993c4f79c949"
+        },
+        {
+          "photo": "routephoto-b9b331ed69f8"
+        },
+        {
+          "photo": "routephoto-a85248a0740e"
+        },
+        {
+          "photo": "routephoto-d60f41c307ff"
+        },
+        {
+          "photo": "routephoto-6921e858e419"
+        },
+        {
+          "photo": "routephoto-f98c99db673f"
+        },
+        {
+          "photo": "routephoto-eab5a5ad3ba5"
+        },
+        {
+          "photo": "routephoto-e42986ba35ae"
+        },
+        {
+          "photo": "routephoto-6300e189d0a4"
+        }
+      ]
+    },
+    {
+      "id": "route-02",
+      "title": "转折破局",
+      "line": 580,
+      "chapters": [
+        {
+          "photo": "longmarch-03-01"
+        },
+        {
+          "photo": "longmarch-03-02"
+        },
+        {
+          "photo": "longmarch-03-03"
+        },
+        {
+          "photo": "longmarch-04-01"
+        },
+        {
+          "photo": "longmarch-04-02"
+        },
+        {
+          "photo": "longmarch-04-03"
+        },
+        {
+          "photo": "commons-8342309e8d75"
+        },
+        {
+          "photo": "commons-cd4a3c016efc"
+        }
+      ],
+      "gallery": [
+        {
+          "photo": "longmarch-03-01"
+        },
+        {
+          "photo": "longmarch-03-02"
+        },
+        {
+          "photo": "longmarch-03-03"
+        },
+        {
+          "photo": "longmarch-04-01"
+        },
+        {
+          "photo": "longmarch-04-02"
+        },
+        {
+          "photo": "longmarch-04-03"
+        },
+        {
+          "photo": "commons-8342309e8d75"
+        },
+        {
+          "photo": "commons-cd4a3c016efc"
+        },
+        {
+          "photo": "commons-756d0fa6894a"
+        },
+        {
+          "photo": "commons-363f20e9b5cc"
+        },
+        {
+          "photo": "commons-ffa2dc140996"
+        },
+        {
+          "photo": "commons-d370e83da2d8"
+        },
+        {
+          "photo": "commons-2670f98872a7"
+        },
+        {
+          "photo": "commons-13514ad38b38"
+        },
+        {
+          "photo": "commons-c83072fc415e"
+        },
+        {
+          "photo": "commons-f7d44e7824ad"
+        },
+        {
+          "photo": "commons-b9cc248188e4"
+        },
+        {
+          "photo": "commons-0a0726ec51fe"
+        },
+        {
+          "photo": "commons-fda27dce2777"
+        },
+        {
+          "photo": "commons-b695ce24b008"
+        },
+        {
+          "photo": "commons-d872484cd14d"
+        },
+        {
+          "photo": "commons-e9d7c1e34079"
+        },
+        {
+          "photo": "commons-b391257f3591"
+        },
+        {
+          "photo": "commons-25d914ec9a38"
+        },
+        {
+          "photo": "commons-66be6b7c1950"
+        },
+        {
+          "photo": "commons-a89f11f9019b"
+        },
+        {
+          "photo": "commons-e992590d2821"
+        },
+        {
+          "photo": "commons-56477a6c87d0"
+        },
+        {
+          "photo": "commons-b9848048eb00"
+        },
+        {
+          "photo": "commons-8b996f059311"
+        },
+        {
+          "photo": "commons-fa558e83711f"
+        },
+        {
+          "photo": "commons-b4fd1deab4e1"
+        },
+        {
+          "photo": "commons-1be68991cbbb"
+        },
+        {
+          "photo": "commons-62c52ac4cec8"
+        },
+        {
+          "photo": "commons-9889c90ad528"
+        },
+        {
+          "photo": "commons-055c55318288"
+        },
+        {
+          "photo": "commons-b0851eb34158"
+        },
+        {
+          "photo": "routephoto-cb19cf51a9ca"
+        },
+        {
+          "photo": "routephoto-d426bbb00578"
+        },
+        {
+          "photo": "routephoto-f4e931eb4772"
+        },
+        {
+          "photo": "routephoto-5205c3c97cd1"
+        },
+        {
+          "photo": "routephoto-ec7d0d8cad59"
+        },
+        {
+          "photo": "routephoto-667f3a6f2f52"
+        },
+        {
+          "photo": "routephoto-cdcdef1c566e"
+        },
+        {
+          "photo": "routephoto-4a5e91b3774e"
+        },
+        {
+          "photo": "routephoto-9083e0bfe30d"
+        },
+        {
+          "photo": "routephoto-3dc190e3a072"
+        },
+        {
+          "photo": "routephoto-37d2c9811c97"
+        },
+        {
+          "photo": "routephoto-80304a867f56"
+        },
+        {
+          "photo": "routephoto-d837c8bb3f8f"
+        },
+        {
+          "photo": "routephoto-67e6a67984c1"
+        }
+      ]
+    },
+    {
+      "id": "route-03",
+      "title": "山河跋涉",
+      "line": 1060,
+      "chapters": [
+        {
+          "photo": "longmarch-05-01"
+        },
+        {
+          "photo": "longmarch-05-02"
+        },
+        {
+          "photo": "longmarch-05-03"
+        },
+        {
+          "photo": "longmarch-06-01"
+        },
+        {
+          "photo": "longmarch-06-02"
+        },
+        {
+          "photo": "longmarch-06-03"
+        },
+        {
+          "photo": "longmarch-07-01"
+        },
+        {
+          "photo": "longmarch-08-01"
+        }
+      ],
+      "gallery": [
+        {
+          "photo": "longmarch-05-01"
+        },
+        {
+          "photo": "longmarch-05-02"
+        },
+        {
+          "photo": "longmarch-05-03"
+        },
+        {
+          "photo": "longmarch-06-01"
+        },
+        {
+          "photo": "longmarch-06-02"
+        },
+        {
+          "photo": "longmarch-06-03"
+        },
+        {
+          "photo": "longmarch-07-01"
+        },
+        {
+          "photo": "longmarch-08-01"
+        },
+        {
+          "photo": "commons-01b681db1f5d"
+        },
+        {
+          "photo": "commons-072c1f697395"
+        },
+        {
+          "photo": "commons-e50a95db0a45"
+        },
+        {
+          "photo": "commons-3cdaafc832ea"
+        },
+        {
+          "photo": "commons-08b76e9946d3"
+        },
+        {
+          "photo": "commons-ce76b8d5519f"
+        },
+        {
+          "photo": "commons-7356a6e9a7aa"
+        },
+        {
+          "photo": "commons-0a29dde6a66d"
+        },
+        {
+          "photo": "commons-2c994dd6bf4f"
+        },
+        {
+          "photo": "commons-f9c912d0503f"
+        },
+        {
+          "photo": "commons-33878ad6664a"
+        },
+        {
+          "photo": "commons-937d1098fb36"
+        },
+        {
+          "photo": "commons-4ac9d39cab72"
+        },
+        {
+          "photo": "commons-e6eaa3536553"
+        },
+        {
+          "photo": "commons-9371fddba4bf"
+        },
+        {
+          "photo": "commons-1fd0c9dcdb59"
+        },
+        {
+          "photo": "routephoto-f364052326c0"
+        },
+        {
+          "photo": "routephoto-4b7533236005"
+        },
+        {
+          "photo": "routephoto-e434a44b1cff"
+        },
+        {
+          "photo": "routephoto-5bf2d52863fb"
+        },
+        {
+          "photo": "routephoto-ec84e11871fa"
+        },
+        {
+          "photo": "routephoto-554109b7e7aa"
+        },
+        {
+          "photo": "routephoto-53bd93efadf6"
+        },
+        {
+          "photo": "routephoto-163bcf8f666d"
+        },
+        {
+          "photo": "routephoto-d4757cb87f72"
+        },
+        {
+          "photo": "routephoto-947cab4b2f55"
+        },
+        {
+          "photo": "routephoto-c55290a963ac"
+        },
+        {
+          "photo": "routephoto-98c99b7e12ab"
+        },
+        {
+          "photo": "routephoto-efd99e7c7926"
+        },
+        {
+          "photo": "routephoto-4878eba1a8fe"
+        },
+        {
+          "photo": "routephoto-0036188a366a"
+        },
+        {
+          "photo": "routephoto-80385e0f1a53"
+        },
+        {
+          "photo": "routephoto-a01471475af8"
+        },
+        {
+          "photo": "routephoto-ba44a94bc84d"
+        },
+        {
+          "photo": "routephoto-2c185dbc8751"
+        },
+        {
+          "photo": "routephoto-a8d92d7f8152"
+        },
+        {
+          "photo": "routephoto-cb3ad7172d16"
+        },
+        {
+          "photo": "routephoto-8b6c7b2594cf"
+        },
+        {
+          "photo": "routephoto-237b8b7f7ccd"
+        },
+        {
+          "photo": "routephoto-b61b01d0a66d"
+        },
+        {
+          "photo": "routephoto-437b5cddc67f"
+        },
+        {
+          "photo": "routephoto-0c9867c10159"
+        },
+        {
+          "photo": "routephoto-431b8a334a11"
+        },
+        {
+          "photo": "regional-b18ff1c2d8d6"
+        },
+        {
+          "photo": "regional-86b0c2ea9604"
+        },
+        {
+          "photo": "regional-73da67694288"
+        },
+        {
+          "photo": "regional-06d075142427"
+        },
+        {
+          "photo": "regional-0118e72ff1b3"
+        },
+        {
+          "photo": "regional-1da6810c07b7"
+        },
+        {
+          "photo": "regional-75f141aa15fa"
+        },
+        {
+          "photo": "regional-e02632207992"
+        },
+        {
+          "photo": "regional-9ad2dc6d3ea4"
+        },
+        {
+          "photo": "regional-6d79f32baf75"
+        },
+        {
+          "photo": "regional-a68519b879a5"
+        },
+        {
+          "photo": "regional-41a5edd150e3"
+        },
+        {
+          "photo": "regional-210607c9e25a"
+        },
+        {
+          "photo": "regional-00e751d341bc"
+        }
+      ]
+    },
+    {
+      "id": "route-04",
+      "title": "胜利曙光",
+      "line": 1540,
+      "chapters": [
+        {
+          "photo": "longmarch-09-01"
+        },
+        {
+          "photo": "longmarch-10-01"
+        },
+        {
+          "photo": "longmarch-10-02"
+        },
+        {
+          "photo": "longmarch-10-03"
+        },
+        {
+          "photo": "routephoto-c27c6fc787dc"
+        },
+        {
+          "photo": "routephoto-87f5b1b9d515"
+        },
+        {
+          "photo": "routephoto-8349497141e0"
+        },
+        {
+          "photo": "routephoto-3af127fad2e0"
+        }
+      ],
+      "gallery": [
+        {
+          "photo": "longmarch-09-01"
+        },
+        {
+          "photo": "longmarch-10-01"
+        },
+        {
+          "photo": "longmarch-10-02"
+        },
+        {
+          "photo": "longmarch-10-03"
+        },
+        {
+          "photo": "routephoto-c27c6fc787dc"
+        },
+        {
+          "photo": "routephoto-87f5b1b9d515"
+        },
+        {
+          "photo": "routephoto-8349497141e0"
+        },
+        {
+          "photo": "routephoto-3af127fad2e0"
+        },
+        {
+          "photo": "routephoto-e65fd79b9bb8"
+        },
+        {
+          "photo": "routephoto-97294e2f20c1"
+        },
+        {
+          "photo": "routephoto-66b13e87b5e7"
+        },
+        {
+          "photo": "routephoto-9626b60e6278"
+        },
+        {
+          "photo": "routephoto-f68b1282410d"
+        },
+        {
+          "photo": "routephoto-c5911d5ddcd1"
+        },
+        {
+          "photo": "routephoto-54602be3f7f1"
+        },
+        {
+          "photo": "routephoto-d8546851cdf8"
+        },
+        {
+          "photo": "routephoto-db0c0d206539"
+        },
+        {
+          "photo": "routephoto-f65eaa4e93bd"
+        },
+        {
+          "photo": "routephoto-6d1b79e50f08"
+        },
+        {
+          "photo": "routephoto-9a694185c341"
+        },
+        {
+          "photo": "routephoto-73e799769e99"
+        },
+        {
+          "photo": "routephoto-d26c8329bbfc"
+        },
+        {
+          "photo": "routephoto-9a46472c7d6e"
+        },
+        {
+          "photo": "routephoto-875d51742b84"
+        },
+        {
+          "photo": "routephoto-4cc3d0028d6a"
+        },
+        {
+          "photo": "routephoto-989efa87dbcb"
+        },
+        {
+          "photo": "routephoto-9745fdc98333"
+        },
+        {
+          "photo": "routephoto-9a82cd1f6955"
+        },
+        {
+          "photo": "routephoto-e8dc4e5011c3"
+        },
+        {
+          "photo": "routephoto-22e073b353f9"
+        },
+        {
+          "photo": "routephoto-a52784476f4a"
+        },
+        {
+          "photo": "routephoto-b489f1c857f6"
+        },
+        {
+          "photo": "routephoto-42bcfb573110"
+        },
+        {
+          "photo": "routephoto-4c6b391129c4"
+        },
+        {
+          "photo": "routephoto-c29732ce20df"
+        },
+        {
+          "photo": "additional-57eafd5387cc"
+        },
+        {
+          "photo": "additional-b589c794d00b"
+        },
+        {
+          "photo": "additional-61439729c7ca"
+        },
+        {
+          "photo": "additional-0c2ab1fd8656"
+        },
+        {
+          "photo": "additional-314e62b65a22"
+        },
+        {
+          "photo": "additional-b457e2a961f0"
+        }
+      ]
+    },
+    {
+      "id": "route-05",
+      "title": "历史留痕",
+      "line": 2020,
+      "chapters": [
+        {
+          "photo": "commons-57d467f6bcfb"
+        },
+        {
+          "photo": "commons-266a362eee50"
+        },
+        {
+          "photo": "commons-1c06c991307c"
+        },
+        {
+          "photo": "commons-b1515f69c239"
+        },
+        {
+          "photo": "commons-ff9d01473faa"
+        },
+        {
+          "photo": "commons-4bda97495164"
+        },
+        {
+          "photo": "commons-23fc21a5bacf"
+        },
+        {
+          "photo": "commons-e5d686608c2a"
+        }
+      ],
+      "gallery": [
+        {
+          "photo": "commons-57d467f6bcfb"
+        },
+        {
+          "photo": "commons-266a362eee50"
+        },
+        {
+          "photo": "commons-1c06c991307c"
+        },
+        {
+          "photo": "commons-b1515f69c239"
+        },
+        {
+          "photo": "commons-ff9d01473faa"
+        },
+        {
+          "photo": "commons-4bda97495164"
+        },
+        {
+          "photo": "commons-23fc21a5bacf"
+        },
+        {
+          "photo": "commons-e5d686608c2a"
+        },
+        {
+          "photo": "commons-39a6be89243c"
+        },
+        {
+          "photo": "commons-3ea4ae7aefac"
+        },
+        {
+          "photo": "commons-62772d65dc55"
+        },
+        {
+          "photo": "commons-82b42d0e0de4"
+        },
+        {
+          "photo": "commons-091d77cceaa0"
+        },
+        {
+          "photo": "commons-7692df75e5c5"
+        },
+        {
+          "photo": "commons-7c7e3e125390"
+        },
+        {
+          "photo": "commons-dd910981335c"
+        },
+        {
+          "photo": "commons-515976bdbeca"
+        },
+        {
+          "photo": "commons-dc3eab8399e9"
+        },
+        {
+          "photo": "commons-b4a14d951e1b"
+        },
+        {
+          "photo": "commons-bd22a1d3065a"
+        },
+        {
+          "photo": "commons-bc588d9fc3fb"
+        },
+        {
+          "photo": "commons-aa40c2228a36"
+        },
+        {
+          "photo": "commons-3747a9469665"
+        },
+        {
+          "photo": "commons-fb0af3cfd36e"
+        },
+        {
+          "photo": "commons-66d00adb3387"
+        },
+        {
+          "photo": "commons-242e77d14eff"
+        },
+        {
+          "photo": "commons-911745db4f38"
+        },
+        {
+          "photo": "commons-a7d6be24d170"
+        },
+        {
+          "photo": "commons-f85b9dbb65cb"
+        },
+        {
+          "photo": "commons-e0182be8ddde"
+        },
+        {
+          "photo": "commons-e527893ff006"
+        },
+        {
+          "photo": "commons-4c44695c343c"
+        },
+        {
+          "photo": "commons-247ea65c8906"
+        },
+        {
+          "photo": "commons-4508f320789e"
+        },
+        {
+          "photo": "commons-0ccdc5b48bca"
+        },
+        {
+          "photo": "commons-981d3f71f524"
+        },
+        {
+          "photo": "commons-2db4b151dda7"
+        },
+        {
+          "photo": "commons-2b846bccc435"
+        },
+        {
+          "photo": "commons-8db9d2340abf"
+        },
+        {
+          "photo": "commons-ebb2c6b0bd59"
+        },
+        {
+          "photo": "commons-99a38e0f598c"
+        },
+        {
+          "photo": "commons-2717bc7e4990"
+        },
+        {
+          "photo": "commons-8bbe07148625"
+        },
+        {
+          "photo": "commons-331d757055da"
+        },
+        {
+          "photo": "people-6359219651117413156"
+        },
+        {
+          "photo": "people-15183581346185149450"
+        },
+        {
+          "photo": "additional-12bbae1fd772"
+        },
+        {
+          "photo": "additional-4a6660466af4"
+        },
+        {
+          "photo": "additional-cd28b8a1d65b"
+        },
+        {
+          "photo": "additional-509735785df6"
+        },
+        {
+          "photo": "additional-2b3b6d0ea24a"
+        },
+        {
+          "photo": "additional-b895c0d458b9"
+        },
+        {
+          "photo": "additional-4fff45860ca3"
+        },
+        {
+          "photo": "additional-4b341d5cec00"
+        },
+        {
+          "photo": "additional-bcec1f336b11"
+        },
+        {
+          "photo": "additional-acaf024199b7"
+        },
+        {
+          "photo": "additional-5b3bd0e9de39"
+        },
+        {
+          "photo": "additional-743b76556973"
+        },
+        {
+          "photo": "additional-c8f8625b757f"
+        }
+      ]
+    }
+  ]
+}

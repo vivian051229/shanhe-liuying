@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#100204">
+  <meta name="description" content="沿着长征路线，在红色光瀑中阅读照片、事件与历史记忆。">
+  <title>山河留影</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2303040a'/%3E%3Cpath d='M9 6v19M13 6v21M16 6v22M19 6v21M23 6v19' stroke='%23ff4026' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <canvas id="stream" tabindex="0" aria-label="长征红色光瀑。每条光线都承载长征故事。左右方向键选择，回车进入；滚轮或双指缩放。"></canvas>
+  <p id="error" role="alert" hidden></p>
+  <div id="loader" aria-hidden="true"><i></i></div>
+  <div id="meter" aria-hidden="true"><i></i></div>
+  <div id="cursor" aria-hidden="true"></div>
+  <p id="announce" class="sr-only" aria-live="polite"></p>
+
+  <header class="masthead"><h1><img class="title-lettering" src="assets/branding/shanhe-title.png" alt="山河留影" width="2170" height="725"></h1><small>一部流动的长征影像集</small><span class="masthead-years">1934 — 1936</span><p>滚轮拉近光瀑，点击光线阅读图文<br>长征影像、沿线实景与馆藏</p></header>
+  <nav class="route-nav" aria-label="长征路线章节"></nav>
+  <section id="story" role="dialog" aria-modal="true" aria-labelledby="story-title" hidden>
+    <div class="story-backdrop" aria-hidden="true"></div>
+    <button class="story-side prev" type="button" aria-label="上一个故事"></button>
+    <button class="story-side next" type="button" aria-label="下一个故事"></button>
+    <div class="story-thread" aria-hidden="true"></div>
+    <div class="story-flow"><div class="strip"></div></div>
+    <button class="story-back" type="button" aria-label="返回红色光瀑">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6.5 10.5 12 5l5.5 5.5"/></svg>
+    </button>
+    <p class="story-title" id="story-title"></p>
+    <div class="lightbox" hidden>
+      <img alt="">
+      <p class="lb-cap"></p>
+    </div>
+  </section>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
