@@ -10,8 +10,14 @@ export function buildStories(photos, authored = [], journal = [], curated = fals
   for (let i = 0; i < NF; i++) {
     if (stories[i]) continue;
     if (curated) {
-      // Sparse, authored fibres: blank light holds the space between unique stories.
-      stories[i] = { id: `line-${i + 1}`, line: i, kind: 'light', title: '光', chapters: [], gallery: [] };
+      // The close-up mosaic repeats the collection visually; chapter galleries retain
+      // their unique photographs and factual metadata.
+      const routes = authored.filter(s => s.id.startsWith('route-'));
+      const source = routes[Math.min(routes.length - 1, Math.floor(i * routes.length / NF))];
+      const all = source.gallery ?? source.chapters;
+      const offset = i % all.length;
+      const gallery = all.slice(offset).concat(all.slice(0, offset));
+      stories[i] = { ...source, id: `line-${i + 1}`, line: i, kind: 'mosaic', nav_hidden: true, chapters: gallery.slice(0, MAX_CHAPTERS), gallery };
       continue;
     }
     const source = authored.length ? authored[i % authored.length] : null;

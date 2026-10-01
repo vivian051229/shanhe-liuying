@@ -85,7 +85,7 @@ function project(x, y) {
 
 function buildFibres() {
   CW = clamp(CH * (W / H) * 0.8, 8.5, 22);
-  SPACING = CW / NF; PHOTO_W = CW / 11; SLOT = Math.max(4 * PHOTO_W, CH / 2 + 0.1);
+  SPACING = CW / NF; PHOTO_W = 0.8 * SPACING; SLOT = 1.9 * PHOTO_W;
   const rows = Math.ceil(NF / 1024), fs = new Float32Array(1024 * rows * 4);
   for (let i = 0; i < NF; i++) {
     fib.x0[i] = -CW / 2 + (i + 0.5 + (rng() - 0.5) * 0.2) * SPACING;
@@ -100,7 +100,7 @@ function uploadStories() {
   const data = new Float32Array(1024 * Math.ceil(NF * 3 / 1024) * 4);
   stories.forEach((s, i) => {
     const L = s.chapters.map(c => c.layer);
-    data.set([s.kind === 'poem' || s.id.startsWith('route-') ? 0 : s.chapters.length, ...s.col], i * 12);
+    data.set([s.kind === 'poem' ? 0 : s.chapters.length, ...s.col], i * 12);
     data.set([L[0] ?? 0, L[1] ?? 0, L[2] ?? 0, L[3] ?? 0, L[4] ?? 0, L[5] ?? 0, L[6] ?? 0, L[7] ?? 0], i * 12 + 4);
   });
   T.story = dataTexture(1024, Math.ceil(NF * 3 / 1024), data);
@@ -274,6 +274,9 @@ addEventListener('resize', () => { if (RT) resize(); });
 
 // ────────────────────────────────────────────────────────────── frame
 
+const mosaicCaption = document.createElement('div');
+mosaicCaption.className = 'mosaic-caption'; mosaicCaption.hidden = true;
+document.body.appendChild(mosaicCaption);
 function step(dt, now) {
   intro += dt; time += dt;
   for (const poem of poetryFibres) {
@@ -325,6 +328,16 @@ function step(dt, now) {
   if (line >= 0) hover.line = line;
   hover.t = line >= 0 ? damp(hover.t, 1, 9, dt) : damp(hover.t, 0, 5, dt);
   if (hover.t < 0.01 && line < 0) hover.line = -1;
+  const showCaption = line >= 0 && PHOTO_W * scale > 42 && !view.isOpen && stories[line].kind !== 'poem';
+  mosaicCaption.hidden = !showCaption;
+  if (showCaption) {
+    const at = unproject(pointer.inside ? pointer.x : W / 2, pointer.inside ? pointer.y : H / 2);
+    const c = stories[line].chapters[chapterAt(line, at.y)];
+    const pt = project(fib.x0[line] + disp(line, at.y), at.y);
+    mosaicCaption.textContent = [c.date, c.caption].filter(Boolean).join(' · ');
+    mosaicCaption.style.left = `${pt.x}px`; mosaicCaption.style.top = `${pt.y}px`;
+    mosaicCaption.style.width = `${Math.max(140, Math.min(360, PHOTO_W * scale))}px`;
+  }
 
   // The hand in the curtain: threads part around the one being pointed at and swing back.
   const moved = pointer.lastX < 0 ? 0 : (pointer.x - pointer.lastX);
@@ -350,7 +363,7 @@ function step(dt, now) {
     // The thread under the hand eases to a stop: its photographs and its light hold still.
     fib.hold[i] += ((i === line ? 1 : 0) - fib.hold[i]) * kHold;
     const go = dt * rate * (1 - fib.hold[i]);
-    const period = Math.max(CH, SLOT * stories[i].chapters.length);
+    const period = Math.max(SLOT, SLOT * stories[i].chapters.length);
     fib.phase[i] = (fib.phase[i] + go * fib.speed[i]) % period;
     fib.flow[i] = (fib.flow[i] + go) % 4000;
     dyn[i * 4] = fib.o[i]; dyn[i * 4 + 1] = fib.py[i]; dyn[i * 4 + 2] = fib.phase[i]; dyn[i * 4 + 3] = fib.flow[i];

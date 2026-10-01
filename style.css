@@ -249,3 +249,5 @@ body:not(.ready) #loader i{animation:loading-stroke 1.6s cubic-bezier(.2,.75,.15
 #enter-stream:disabled::after{opacity:0}
 #enter-stream:not(:disabled):active{color:#d8bc92;transform:translateY(1px)}
 @media(prefers-reduced-motion:reduce){#enter-stream,#enter-stream::after{transition:none}}
+
+.mosaic-caption{position:fixed;z-index:4;pointer-events:none;transform:translate(-50%,-50%);padding:10px 12px;color:#fff5e5;background:linear-gradient(90deg,transparent,rgba(15,7,6,.72),transparent);font:13px/1.7 var(--serif);text-align:center;text-shadow:0 1px 3px #000}.mosaic-caption[hidden]{display:none}
