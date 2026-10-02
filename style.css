@@ -299,3 +299,30 @@ body:not(.ready) #loader i{animation:loading-stroke 1.6s cubic-bezier(.2,.75,.15
 @media(max-width:700px){#music-toggle{right:14px;top:17px;padding:5px 7px;gap:5px;font-size:10px}}
 
 #music-toggle{z-index:95}
+
+/* A quiet beacon identifies the entrance without a flashing UI frame. */
+@keyframes entrance-breathe{
+  0%,100%{color:#c9afa2;text-shadow:0 0 8px #d79c8720}
+  50%{color:#fff1dd;text-shadow:0 0 14px #efbca580,0 0 32px #c8746655}
+}
+@keyframes entrance-light{
+  0%,100%{opacity:.48;filter:brightness(.85)}
+  50%{opacity:1;filter:brightness(1.6)}
+}
+#opening #enter-stream:not(:disabled) .entry-label{animation:entrance-breathe 2.8s ease-in-out infinite}
+#opening #enter-stream:not(:disabled) .entry-wing,
+#opening #enter-stream:not(:disabled) .entry-spark,
+#opening #enter-stream:not(:disabled):after{animation:entrance-light 2.8s ease-in-out infinite}
+#opening #enter-stream .entry-wing{transition:width .4s,filter .4s}
+#opening #enter-stream:not(:disabled):hover .entry-label,
+#opening #enter-stream:not(:disabled):focus-visible .entry-label{animation:none;color:#fff6e7;text-shadow:0 0 18px #ffd6bca0,0 0 38px #d8837166}
+#opening #enter-stream:not(:disabled):hover .entry-wing,
+#opening #enter-stream:not(:disabled):focus-visible .entry-wing,
+#opening #enter-stream:not(:disabled):hover .entry-spark,
+#opening #enter-stream:not(:disabled):focus-visible .entry-spark{animation:none;opacity:1;filter:brightness(1.8)}
+@media(prefers-reduced-motion:reduce){
+ #opening #enter-stream:not(:disabled) .entry-label{animation:none;color:#fff1dd;text-shadow:0 0 14px #efbca560}
+ #opening #enter-stream:not(:disabled) .entry-wing,
+ #opening #enter-stream:not(:disabled) .entry-spark,
+ #opening #enter-stream:not(:disabled):after{animation:none;opacity:1}
+}
