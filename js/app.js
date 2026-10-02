@@ -17,7 +17,7 @@ import { createGLHelpers } from './gl.js';
 import { loadCatalog } from './catalog.js?v=caption-clean-20261002';
 import { loadTextures } from './photos.js';
 import { buildStories, NF } from './stories.js?v=caption-clean-20261002';
-import { IDLE, FIBRE_VS, FIBRE_FS, FLOOR_VS, FLOOR_FS, POST_VS, DOWN_FS, UP_FS, BLUR_FS, COMPOSITE_FS } from './shaders.js';
+import { IDLE, FIBRE_VS, FIBRE_FS, FLOOR_VS, FLOOR_FS, POST_VS, DOWN_FS, UP_FS, BLUR_FS, COMPOSITE_FS } from './shaders.js?v=clean-photo-threads-20261002';
 
 const canvas = document.getElementById('stream');
 const CAPTURE = new URLSearchParams(location.search).has('capture');

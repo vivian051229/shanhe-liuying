@@ -132,8 +132,9 @@ void main(){
     float vp=(local-(uS-h)*.5)/h, up=.5+vXw/uW;
     float slotPx=uS*vPpu;
     float detail=ss(12.,100.,slotPx);
-    vec3 st=vCol*(.5+.35*cl);
-    float inside=0., core=1.;
+    float core=clamp(1.2-abs(vXw)*vPpu,0.,1.);
+    vec3 st=vCol*(.3+.25*cl+.5*vHov)*core;
+    float inside=0.;
     if(detail>.001){
       float lod=log2(max(1.,${LAYER}./(min(uW,h)*vPpu)));
       vec3 img=textureLod(uArr,vec3((vec2(clamp(up,0.,1.),clamp(vp,0.,1.))+vec2(mod(layer,2.),floor(mod(layer,4.)/2.)))*.5,floor(layer/4.)),lod).rgb;
@@ -146,7 +147,8 @@ void main(){
     }
     st*=1.+vHov*.25*(1.-detail);
     // The curtain's own light keeps running along the thread between the pictures.
-    c=mix(c,st*cov,reveal)+c*core*(1.-inside)*reveal*.75;
+    float clean=ss(4.,16.,vSpacePx);
+    c=mix(c,st*cov,max(reveal,clean));
   }
 
   float front=uIntro*8.5-1.;
