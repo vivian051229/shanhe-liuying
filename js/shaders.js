@@ -136,7 +136,7 @@ void main(){
     float inside=0., core=1.;
     if(detail>.001){
       float lod=log2(max(1.,${LAYER}./(min(uW,h)*vPpu)));
-      vec3 img=textureLod(uArr,vec3(clamp(up,0.,1.),clamp(vp,0.,1.),layer),lod).rgb;
+      vec3 img=textureLod(uArr,vec3((vec2(clamp(up,0.,1.),clamp(vp,0.,1.))+vec2(mod(layer,2.),floor(mod(layer,4.)/2.)))*.5,floor(layer/4.)),lod).rgb;
       float e=1./max(h*vPpu,1.);
       inside=ss(0.,e,vp)*ss(1.,1.-e,vp)*ss(uYB,uYB+3.*uS,y)*ss(uCH,uCH-2.*uS,y);
       // Between moments only the thread itself remains, a hairline in its story's colour.

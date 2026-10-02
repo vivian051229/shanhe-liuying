@@ -277,20 +277,30 @@ addEventListener('resize', () => { if (RT) resize(); });
 function step(dt, now) {
   intro += dt; time += dt;
   for (const poem of poetryFibres) {
-    // Letters share the fibre's world coordinates and displacement, so zooming or
-    // parting the curtain moves the wire and every letter together.
-    const scale = Math.exp(cam.ls), worldStep = PHOTO_W * 2.5, topWorld = HOME_Y + poem.chars.length * worldStep / 2;
-    const origin = project(fib.x0[poem.line], topWorld);
-    const size = scale * PHOTO_W * 1.8;
-    poem.el.style.left = `${origin.x}px`; poem.el.style.top = `${origin.y}px`;
-    poem.el.style.setProperty('--glyph-size', `${size}px`);
-    poem.el.style.height = `${scale * worldStep * poem.chars.length}px`;
+    const scale = Math.exp(cam.ls), worldStep = PHOTO_W * 1.35;
+    const size = scale * PHOTO_W * .6;
+    const origin = project(fib.x0[poem.line], HOME_Y);
+    const visible = size >= 6 && origin.x > -80 && origin.x < W + 80 && !view?.isOpen;
+    poem.el.hidden = !visible;
+    if (!visible) continue;
+    poem.el.style.left = `${origin.x}px`; poem.el.style.top = '0px';
+    poem.el.style.setProperty('--glyph-size', `${size}px`); poem.el.style.height = `${H}px`;
+    const topWorld = CH - .1;
+    const top = unproject(W / 2, 0).y;
+    const first = Math.max(0, Math.floor((topWorld - top) / worldStep) - 1);
+    const count = Math.min(160, Math.ceil(H / (worldStep * scale)) + 3);
+    while (poem.glyphs.length < count) {
+      const glyph = document.createElement('span'); poem.el.querySelector('.poem-glyphs').appendChild(glyph); poem.glyphs.push(glyph);
+    }
     poem.glyphs.forEach((glyph, j) => {
-      const wy = topWorld - j * worldStep;
-      const point = project(fib.x0[poem.line] + disp(poem.line, wy), wy);
-      glyph.style.left = `${point.x - origin.x}px`; glyph.style.top = `${point.y - origin.y}px`;
+      const idx = first + j, wy = topWorld - idx * worldStep;
+      glyph.hidden = j >= count || wy < 0 || wy > CH;
+      if (glyph.hidden) return;
+      glyph.textContent = poem.chars[idx % poem.chars.length];
+      const pt = project(fib.x0[poem.line] + disp(poem.line, wy), wy);
+      glyph.style.left = `${pt.x - origin.x}px`; glyph.style.top = `${pt.y}px`;
     });
-    poem.el.style.opacity = String(smooth(1.4, 5, intro));
+    poem.el.style.opacity = String(smooth(1.4, 5, intro) * smooth(6, 20, size));
   }
   const lsMin = LS_MIN(), lsMax = LS_MAX();
   cam.lsT = clamp(cam.lsT, lsMin, lsMax);
@@ -523,9 +533,16 @@ async function boot() {
   poetryFibres = (catalog.poetry || []).map((poem, k) => {
     const el = document.createElement('button'); el.type = 'button'; el.className = 'hanging-poem';
     el.setAttribute('aria-label', `${poem.author}《${poem.title}》，点击阅读全文`);
-    const chars = [...poem.text.replace(/[，。？、\s]/g, '')];
-    el.innerHTML = `<span class="poem-wire"></span><span class="poem-glyphs">${chars.map(c => `<span>${c}</span>`).join('')}</span>`;
-    el.addEventListener('click', () => openStory(poem.line)); poetryLayer.appendChild(el);
+    const chars = [...poem.text].filter(c => /[\u4e00-\u9fff]/.test(c));
+    el.innerHTML = '<span class="poem-glyphs"></span>'; el.tabIndex = -1;
+    el.addEventListener('click', () => openStory(poem.line));
+    el.addEventListener('wheel', e => {
+      e.preventDefault(); markInput();
+      if (view?.isOpen) return;
+      const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? H : 1;
+      zoomBy(-e.deltaY * unit * (e.ctrlKey ? 0.014 : 0.003), e.clientX, e.clientY);
+    }, { passive: false });
+    poetryLayer.appendChild(el);
     return { ...poem, el, chars, glyphs: [...el.querySelectorAll('.poem-glyphs > span')] };
   });
 
