@@ -359,3 +359,6 @@ body:not(.ready) #loader i{animation:loading-stroke 1.6s cubic-bezier(.2,.75,.15
  #opening #enter-stream:not(:disabled):hover .entry-label,
  #opening #enter-stream:not(:disabled):focus-visible .entry-label{animation:none;opacity:1;transform:none;color:#fff9e9}
 }
+
+#opening #enter-stream:after{height:22px;margin-top:15px}
+#opening #enter-stream .entry-spark{top:65px}
