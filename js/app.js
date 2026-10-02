@@ -11,7 +11,7 @@
 // half-float buffer, with a mirrored, blurred copy for the floor, a mip-chain bloom, and a
 // final tone-mapping pass.
 
-import { StoryView } from './story.js?v=poem-text-20261002';
+import { StoryView } from './story.js?v=poem-wire-20261002';
 import { clamp, smooth, damp, mulberry } from './math.js';
 import { createGLHelpers } from './gl.js';
 import { loadCatalog } from './catalog.js';

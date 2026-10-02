@@ -259,3 +259,5 @@ body:not(.ready) #loader i{animation:loading-stroke 1.6s cubic-bezier(.2,.75,.15
 .poem-item .entry{top:0;transform:none}.poem-item .shot:hover img{transform:none}
 
 .poem-item .frame{background:transparent}.poem-item .frame::after{display:none}.reading-poem{display:flex;flex-direction:column;align-items:center;padding:16px 0;color:#eadbc1;font-family:LongMarchBrush,serif;font-size:var(--letter-size);line-height:var(--letter-step)}.reading-poem>span{display:block;height:var(--letter-step);flex-shrink:0}
+
+#story .poem-item .shot .frame{background:transparent;border:0;box-shadow:none;overflow:visible}#story .poem-item .shot .frame::after{display:none}#story .reading-poem{position:relative;isolation:isolate}#story .reading-poem::before{content:"";position:absolute;left:50%;top:-16px;bottom:-16px;width:1px;background:#873d45;opacity:.72;z-index:-1}#story .reading-poem>span{position:relative;background:none;border:0;box-shadow:none;text-shadow:0 1px 8px #16080b}
