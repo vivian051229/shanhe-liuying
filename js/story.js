@@ -205,6 +205,8 @@ export class StoryView {
       const glyphs = c.kind === 'poem' ? [...(c.text || '')].filter(char => /[\u4e00-\u9fff]/.test(char)) : [];
       const letterSize = Math.min(44, w * .7), letterStep = letterSize * 1.65;
       const h = c.kind === 'poem' ? Math.ceil(glyphs.length * letterStep + 32) : Math.round(w / c.aspect);
+      const normalizeText = value => (value || '').replace(/[\s，。！？、；：,.!?;:·]/g, '');
+      const detail = normalizeText(c.text) === normalizeText(c.caption) ? '' : c.text;
       const el = document.createElement('div');
       el.className = c.kind === 'poem' ? 'item poem-item' : 'item';
       el.style.width = `${w}px`;
@@ -215,7 +217,7 @@ export class StoryView {
         ${c.text || c.date ? `<div class="entry ${c.i % 2 ? 'right' : 'left'}">
           ${c.date ? `<span class="date">${esc(c.date)}</span>` : ''}
           ${c.caption ? `<h2>${esc(c.caption)}</h2>` : ''}
-          ${c.text ? `<p>${esc(c.text)}</p>` : ''}
+          ${detail ? `<p>${esc(detail)}</p>` : ''}
           ${c.material ? `<p class="material-note">${esc(c.material)}</p>` : ''}
           ${c.source ? `<a class="source-link" href="${esc(c.source)}" target="_blank" rel="noopener noreferrer">查看图片与资料出处 ↗</a>` : ''}
         </div>` : ''}`;
