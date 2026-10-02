@@ -341,3 +341,21 @@ body:not(.ready) #loader i{animation:loading-stroke 1.6s cubic-bezier(.2,.75,.15
  #opening #enter-stream:not(:disabled):hover .entry-label,
  #opening #enter-stream:not(:disabled):focus-visible .entry-label{animation:none;opacity:1;color:#fff7e8}
 }
+
+/* Strong entrance signal: high-contrast lettering, pulse and explicit cue. */
+@keyframes entrance-clear-pulse{
+  0%,15%,100%{opacity:1;transform:scale(1.07);color:#fff9e9;text-shadow:0 0 12px #ffd4aeee,0 0 30px #edaa7caa,0 0 55px #ba654d88}
+  48%,60%{opacity:.16;transform:scale(1);color:#c0a28e;text-shadow:none}
+  85%{opacity:1;transform:scale(1.07);color:#fff9e9;text-shadow:0 0 12px #ffd4aeee,0 0 30px #edaa7caa,0 0 55px #ba654d88}
+}
+#opening #enter-stream:not(:disabled) .entry-label,
+#opening #enter-stream:not(:disabled):hover .entry-label,
+#opening #enter-stream:not(:disabled):focus-visible .entry-label{font-size:clamp(26px,2.5vw,34px);animation:entrance-clear-pulse 1.4s ease-in-out infinite;will-change:transform,opacity}
+#opening #enter-stream .entry-wing{top:33px}
+#opening #enter-stream .entry-spark{top:68px}
+#opening .entry-click-hint{font:12px/1.6 var(--serif);letter-spacing:.18em;color:#e6b995;margin:8px 0 0;text-shadow:0 0 12px #c4765955}
+@media(prefers-reduced-motion:reduce){
+ #opening #enter-stream:not(:disabled) .entry-label,
+ #opening #enter-stream:not(:disabled):hover .entry-label,
+ #opening #enter-stream:not(:disabled):focus-visible .entry-label{animation:none;opacity:1;transform:none;color:#fff9e9}
+}
