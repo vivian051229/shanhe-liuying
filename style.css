@@ -283,3 +283,12 @@ body:not(.ready) #loader i{animation:loading-stroke 1.6s cubic-bezier(.2,.75,.15
 
 #opening.has-flashlight .opening-flashlight{background:radial-gradient(circle 235px at var(--light-x) var(--light-y),transparent 0%,rgba(0,0,0,.01) 25%,rgba(0,0,0,.2) 52%,rgba(0,0,0,.52) 82%,rgba(0,0,0,.57) 100%)}
 @media(hover:hover) and (pointer:fine){body.opening-torch #cursor{z-index:90;opacity:1}#opening,#opening *{cursor:none!important}}
+
+/* Chapter preface: measured reading widths and distinct boundary labels. */
+.chapter-context{padding:22px 0 24px;background:linear-gradient(110deg,#120a09fa,#160c0bef);border-bottom-color:#694a40}
+#chapter-context-body{grid-template-columns:minmax(180px,.9fr) minmax(280px,1.45fr) minmax(240px,1.1fr);gap:36px;align-items:start}
+.chapter-context .chapter-heading h2{font-size:25px;letter-spacing:.17em;margin:0 0 13px;line-height:1.4}.chapter-context .chapter-heading time{font-size:11px;line-height:1.9;color:#b49291}.chapter-context .chapter-heading a{display:inline-block;margin-top:15px;color:#9d8a7c;font-size:10px;letter-spacing:.08em}
+.chapter-context .chapter-intro{font-size:14px;line-height:2.15;letter-spacing:.035em;grid-column:auto;grid-row:auto;margin:0;color:#d3c5b5;max-width:38em}
+.chapter-reading{padding-left:26px;border-left:1px solid #55323a}.chapter-boundaries{margin:0;display:grid;gap:12px}.chapter-boundaries>div{display:grid;grid-template-columns:28px 1fr;gap:14px}.chapter-boundaries dt{font:10px/2 var(--serif);letter-spacing:.12em;color:#aa7883;padding-top:2px}.chapter-boundaries dd{margin:0;font:12px/1.95 var(--serif);color:#b2a394}.chapter-context .chapter-reading .boundary-note{margin:0;font-size:12px;line-height:1.95}.story-flow{clip-path:inset(270px 0 0)}
+@media(max-width:1000px) and (min-width:701px){#chapter-context-body{grid-template-columns:.8fr 1.4fr;gap:25px}.chapter-reading{display:none}.chapter-context .chapter-intro{font-size:13px}.story-flow{clip-path:inset(265px 0 0)}}
+@media(max-width:700px){.chapter-context{padding:14px 16px}#chapter-context-body{display:block}.chapter-context .chapter-heading h2{font-size:19px;margin-bottom:6px}.chapter-context .chapter-heading a{margin-top:7px}.chapter-reading{display:none}.chapter-context .chapter-intro{display:none}.story-flow{clip-path:inset(180px 0 0)}}

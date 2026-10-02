@@ -173,7 +173,11 @@ export class StoryView {
     this.title.textContent = s.title;
     document.getElementById('chapter-note-body').innerHTML = `<h2>${esc(s.title)}</h2><time>${esc(s.period || '')}</time><p>${esc(s.intro || '')}</p>${(s.events || []).map(e => `<p class="chapter-event"><time>${esc(e.date)}</time> ${esc(e.title)}</p>`).join('')}`;
     document.querySelector('.chapter-note').open = false;
-    document.getElementById('chapter-context-body').innerHTML = `<h2>${esc(s.title)}</h2><time>${esc(s.period || '')}</time><p>${esc(s.intro || '')}</p><p class="boundary-note">${esc(s.boundary || '')}</p>${s.source ? `<a href="${esc(s.source)}" target="_blank" rel="noopener">分期参考：石仲泉长征五阶段研究 ↗</a>` : ''}`;
+    const boundary = (s.boundary || '').match(/^起点：(.+?)；终点：(.+?)。(.+)$/);
+    const boundaryMarkup = boundary
+      ? `<dl class="chapter-boundaries"><div><dt>起点</dt><dd>${esc(boundary[1])}</dd></div><div><dt>终点</dt><dd>${esc(boundary[2])}</dd></div><div><dt>主线</dt><dd>${esc(boundary[3])}</dd></div></dl>`
+      : `<p class="boundary-note">${esc(s.boundary || '')}</p>`;
+    document.getElementById('chapter-context-body').innerHTML = `<div class="chapter-heading"><h2>${esc(s.title)}</h2><time>${esc(s.period || '')}</time>${s.source ? `<a href="${esc(s.source)}" target="_blank" rel="noopener">分期参考 ↗</a>` : ''}</div><p class="chapter-intro">${esc(s.intro || '')}</p><div class="chapter-reading">${boundaryMarkup}</div>`;
     const routes = this.stories.filter(s => s.id.startsWith('route-')).sort((a,b) => a.id.localeCompare(b.id));
     const r = routes.findIndex(t => t.title === s.title);
     const pv = r >= 0 ? routes[mod(r - 1, routes.length)] : routes[0], nx = r >= 0 ? routes[mod(r + 1, routes.length)] : routes[0];
