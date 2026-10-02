@@ -23,6 +23,28 @@ const canvas = document.getElementById('stream');
 const CAPTURE = new URLSearchParams(location.search).has('capture');
 const gl = canvas.getContext('webgl2', { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'high-performance', preserveDrawingBuffer: CAPTURE });
 const body = document.body;
+
+// A soft flashlight follows the pointer only on the opening page.
+const openingLightHost = document.getElementById('opening');
+const openingLight = document.createElement('div');
+openingLight.className = 'opening-flashlight';
+openingLight.setAttribute('aria-hidden', 'true');
+openingLightHost.appendChild(openingLight);
+let openingLightFrame = 0;
+let openingLightX = innerWidth / 2, openingLightY = innerHeight / 2;
+openingLightHost.addEventListener('pointermove', event => {
+  if (event.pointerType === 'touch' || openingLightHost.hidden) return;
+  openingLightX = event.clientX; openingLightY = event.clientY;
+  openingLightHost.classList.add('has-flashlight');
+  if (openingLightFrame) return;
+  openingLightFrame = requestAnimationFrame(() => {
+    openingLight.style.setProperty('--light-x', `${openingLightX}px`);
+    openingLight.style.setProperty('--light-y', `${openingLightY}px`);
+    openingLightFrame = 0;
+  });
+});
+openingLightHost.addEventListener('pointerleave', () => openingLightHost.classList.remove('has-flashlight'));
+
 const $ = s => document.querySelector(s);
 const $loader = $('#loader i'), $meter = $('#meter'), $cursor = $('#cursor'), $announce = $('#announce');
 
