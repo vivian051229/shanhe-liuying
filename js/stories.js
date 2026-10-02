@@ -13,7 +13,9 @@ export function buildStories(photos, authored = [], journal = [], curated = fals
       // The close-up mosaic repeats the collection visually; chapter galleries retain
       // their unique photographs and factual metadata.
       const routes = authored.filter(s => s.id.startsWith('route-'));
-      const source = routes[Math.min(routes.length - 1, Math.floor(i * routes.length / NF))];
+      // Interleave chapters across nearby photo fibres; every fifth fibre is poetry.
+      const photoOrdinal = i - Math.floor((i + 2) / 5);
+      const source = routes[photoOrdinal % routes.length];
       const all = source.gallery ?? source.chapters;
       const gcd = (a, b) => b ? gcd(b, a % b) : a;
       let stride = 17; while (gcd(stride, all.length) !== 1) stride++;
