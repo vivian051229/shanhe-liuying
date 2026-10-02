@@ -37,7 +37,7 @@ export function buildStories(photos, authored = [], journal = [], curated = fals
   for (const s of stories) {
     const hydrate = c => {
       const layer = byId.get(String(c.photo)), p = photos[layer];
-      return { ...c, layer, src: p.src, aspect: p.aspect, caption: c.caption ?? p.description, credit: c.credit ?? p.photographer, date: c.date ?? p.date, text: c.text ?? p.text, source: p.source_page, material: p.material_type, kind: p.kind };
+      return { ...c, layer, src: p.src, readingSrc: p.readingSrc, aspect: p.aspect, caption: c.caption ?? p.description, credit: c.credit ?? p.photographer, date: c.date ?? p.date, text: c.text ?? p.text, source: p.source_page, material: p.material_type, kind: p.kind };
     };
     if (s.kind === 'light') { s.col = [.36, .045, .085]; s.rgb = '92 11 22'; continue; }
     s.chapters = s.chapters.map(hydrate);

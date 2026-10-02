@@ -216,7 +216,7 @@ export class StoryView {
       el.style.width = `${w}px`;
       el.innerHTML = `
         <button class="shot" type="button" data-i="${c.i}" style="height:${h}px" aria-label="${esc(c.caption || '长征照片')}，点击放大">
-          <span class="frame">${c.kind === 'poem' ? `<span class="reading-poem" style="--letter-size:${letterSize}px;--letter-step:${letterStep}px" aria-label="${esc(c.text)}">${glyphs.map(char => `<span>${esc(char)}</span>`).join('')}</span>` : `<img alt="${esc(c.caption)}" decoding="async" loading="lazy" src="${esc(c.src)}">`}</span>
+          <span class="frame">${c.kind === 'poem' ? `<span class="reading-poem" style="--letter-size:${letterSize}px;--letter-step:${letterStep}px" aria-label="${esc(c.text)}">${glyphs.map(char => `<span>${esc(char)}</span>`).join('')}</span>` : `<img alt="${esc(c.caption)}" decoding="async" loading="lazy" src="${esc(c.readingSrc || c.src)}">`}</span>
         </button>
         ${c.text || c.date ? `<div class="entry ${c.i % 2 ? 'right' : 'left'}">
           ${c.date ? `<span class="date">${esc(c.date)}</span>` : ''}
