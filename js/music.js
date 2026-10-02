@@ -32,7 +32,18 @@ button.addEventListener('click', () => {
   if (audio.paused) void start();
   else { ++attempt; cancelAnimationFrame(fadeFrame); audio.pause(); update(); }
 });
-document.getElementById('enter-stream').addEventListener('click', () => void start(), { once: true });
+const opening = document.getElementById('opening');
+// Browsers that allow autoplay start on the opening; otherwise the first
+// opening-page gesture unlocks playback without waiting for entry.
+void start();
+const unlock = () => {
+  if (audio.paused) void start();
+};
+opening.addEventListener('pointerdown', unlock, { once: true });
+opening.addEventListener('keydown', unlock, { once: true });
+document.getElementById('enter-stream').addEventListener('click', () => {
+  if (audio.paused) void start();
+}, { once: true });
 audio.addEventListener('play', update);
 audio.addEventListener('pause', update);
 audio.addEventListener('error', update);
