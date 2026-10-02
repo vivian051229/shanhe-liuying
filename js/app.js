@@ -558,7 +558,7 @@ async function boot() {
   const opening = document.getElementById('opening');
   if (!location.hash.startsWith('#/story/')) {
     document.getElementById('enter-stream').disabled = false;
-    document.getElementById('enter-stream').textContent = '循光而入';
+    document.querySelector('#enter-stream .entry-label').textContent = '循光而入';
     await new Promise(resolve => document.getElementById('enter-stream').addEventListener('click', resolve, { once: true }));
   }
   opening.hidden = true;
