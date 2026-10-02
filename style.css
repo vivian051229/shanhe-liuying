@@ -255,3 +255,5 @@ body:not(.ready) #loader i{animation:loading-stroke 1.6s cubic-bezier(.2,.75,.15
 .poem-glyphs>span::before{content:"";position:absolute;left:50%;top:-24%;bottom:-24%;width:1px;background:#87372c;z-index:-1;opacity:.8}
 
 .hanging-poem[hidden],.poem-glyphs>span[hidden]{display:none}.poem-glyphs>span::before{top:-52%;bottom:-52%;opacity:.65}
+
+.poem-item .entry{top:0;transform:none}.poem-item .shot:hover img{transform:none}

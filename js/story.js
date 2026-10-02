@@ -201,9 +201,10 @@ export class StoryView {
     this.strip.textContent = '';
     this.nodes = [];
     const first = this.chapters.map(c => {
-      const w = Math.round(c.aspect < 1 ? base * 0.72 : base), h = Math.round(w / c.aspect);
+      const w = c.kind === 'poem' ? Math.round(clamp(vw * 0.065, 44, 76)) : Math.round(c.aspect < 1 ? base * 0.72 : base);
+      const h = Math.round(w / c.aspect);
       const el = document.createElement('div');
-      el.className = 'item';
+      el.className = c.kind === 'poem' ? 'item poem-item' : 'item';
       el.style.width = `${w}px`;
       el.innerHTML = `
         <button class="shot" type="button" data-i="${c.i}" style="height:${h}px" aria-label="${esc(c.caption || '长征照片')}，点击放大">
@@ -252,7 +253,8 @@ export class StoryView {
       const y = mod(n.base + this.offset + n.h, this.cycle) - n.h;
       n.y = y;
       // Moments dim into the dark as they near the edges; the thread between them stays straight.
-      const d = (y + n.h / 2 - vh / 2) / (vh / 2);
+      const focusY = n.h > vh * .8 ? clamp(vh / 2, y, y + n.h) : y + n.h / 2;
+      const d = (focusY - vh / 2) / (vh / 2);
       n.el.style.transform = `translate3d(-50%, ${y.toFixed(2)}px, 0)`;
       n.el.style.opacity = (1 - smooth(0.78, 1.18, Math.abs(d))).toFixed(3);
     }
@@ -266,7 +268,7 @@ export class StoryView {
       const dt = Math.min(0.05, (now - last) / 1000); last = now;
       const flowing = this.el.classList.contains('unfolded') && !this.paused && !REDUCED && this.lb.hidden;
       const hold = this.hovering && !this.drag;
-      this.drift = damp(this.drift, flowing && !hold ? DRIFT : 0, hold ? 5 : 1.6, dt);
+      this.drift = damp(this.drift, flowing && !hold ? (this.stories[this.index]?.kind === 'poem' ? -DRIFT : DRIFT) : 0, hold ? 5 : 1.6, dt);
       if (!this.drag) { this.target += (this.drift + this.vel) * dt; this.vel *= Math.exp(-dt * 3); }
 
       this.offset = damp(this.offset, this.target, this.drag ? 30 : 9, dt);
