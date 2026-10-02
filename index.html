@@ -7,16 +7,41 @@
   <meta name="description" content="沿着长征路线，在红色光瀑中阅读照片、事件与历史记忆。">
   <title>山河留影</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2303040a'/%3E%3Cpath d='M9 6v19M13 6v21M16 6v22M19 6v21M23 6v19' stroke='%23ff4026' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=caption-clean-20261002">
+  <link rel="stylesheet" href="./style.css?v=opening-guide-20261002">
 </head>
 <body>
   <section id="opening" aria-labelledby="opening-title">
-    <i class="opening-line" aria-hidden="true"></i><p class="opening-eyebrow">1934 — 1936 / 一场循光而行的历史阅读</p>
-    <h2 id="opening-title"><img src="assets/branding/shanhe-title.png" alt="山河留影" width="2170" height="725"></h2>
-    <p class="opening-subtitle">长征历史影像交互叙事</p>
-    <p class="opening-poem">照片留住瞬间，光线串起征程。<br>请以手触光，穿过历史的山河，<br>走近那些真实的面孔与足迹。</p>
-    <button id="enter-stream" disabled>正在点亮光线…</button>
-    <small>点击影像光线，阅读长征历史与故事</small>
+    <i class="opening-line" aria-hidden="true"></i>
+    <div class="opening-main">
+      <p class="opening-eyebrow">1934 — 1936 / 一场循光而行的历史阅读</p>
+      <h2 id="opening-title"><img src="assets/branding/shanhe-title.png" alt="山河留影" width="2170" height="725"></h2>
+      <p class="opening-subtitle">长征历史影像交互叙事</p>
+      <p class="opening-poem">照片留住瞬间，光线串起征程。<br>请以手触光，穿过历史的山河，<br>走近那些真实的面孔与足迹。</p>
+      <button id="enter-stream" disabled>正在点亮光线…</button>
+    </div>
+    <aside class="opening-guide" aria-label="交互与阅读线索">
+      <h3>循光而入，沿线读史。</h3>
+      <ol class="opening-steps">
+        <li><b>走近光瀑</b><p>滚动或双指缩放，照片与诗句会逐渐显现。</p></li>
+        <li><b>沿线阅读</b><p>点击一条影像线，进入对应章节。影像按时间先后自动流动，也可手动滚动细读。</p></li>
+        <li><b>细看与返回</b><p>点击照片可放大；点击左上角箭头，返回光瀑。</p></li>
+      </ol>
+      <details class="opening-routes">
+        <summary>阅读线索 · 五章如何划分 <span aria-hidden="true">＋</span></summary>
+        <div class="opening-route-content">
+          <p>以战略转向、北上决策、落脚陕北和主力会师等重要节点为边界，将影像编入五个章节。五章的照片线交错悬挂在光瀑中，也可通过下方章节名称直接进入。</p>
+          <dl>
+            <div><dt>征途初起 <time>1934年10月—1935年1月15日前</time></dt><dd>从于都出发、突破封锁到湘江战役后的战略调整。</dd></div>
+            <div><dt>转折破局 <time>1935年1月15日—6月26日前</time></dt><dd>从遵义会议到四渡赤水、渡江夺桥及一、四方面军会师。</dd></div>
+            <div><dt>雪山北上 <time>1935年6月26日—9月18日前</time></dt><dd>围绕北上决策，讲述雪山草地、俄界会议与突破腊子口。</dd></div>
+            <div><dt>落脚陕北 <time>1935年9月18日—12月17日前</time></dt><dd>从哈达铺确定去向，到抵达吴起镇、会合与巩固陕北根据地。</dd></div>
+            <div><dt>百川归流 <time>1935年12月17日—1936年10月22日</time></dt><dd>从新的战略部署，到各路红军北上和三大主力会师。</dd></div>
+          </dl>
+          <p>各章同时收录相关人物的生平老照片，标注可核实的照片年代，作为理解长征人物的补充。</p>
+          <a href="https://www.dswxyjy.org.cn/n1/2016/0929/c218998-28749730.html" target="_blank" rel="noopener">分期参考：石仲泉长征五阶段研究 ↗</a>
+        </div>
+      </details>
+    </aside>
   </section>
   <canvas id="stream" tabindex="0" aria-label="长征红色光瀑。点击有影像的光线阅读长征故事。左右方向键选择，回车进入；滚轮或双指缩放。"></canvas>
   <p id="error" role="alert" hidden></p>
@@ -45,6 +70,6 @@
   </section>
 
   <details class="narrative-note"><summary>叙事依据</summary><div>五章以长征进程中的战略转向、北上决策、落脚陕北与主力会师为边界。参考石仲泉《红军长征的基本内涵和红军长征史研究的若干问题》提出的五阶段研究框架。<a href="https://www.dswxyjy.org.cn/n1/2016/0929/c218998-28749730.html" target="_blank" rel="noopener">阅读分期依据 ↗</a></div></details>
-  <script type="module" src="./js/app.js?v=caption-clean-20261002"></script>
+  <script type="module" src="./js/app.js?v=opening-guide-20261002"></script>
 </body>
 </html>
