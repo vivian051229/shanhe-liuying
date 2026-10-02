@@ -11,12 +11,12 @@
 // half-float buffer, with a mirrored, blurred copy for the floor, a mip-chain bloom, and a
 // final tone-mapping pass.
 
-import { StoryView } from './story.js?v=chapter-lines-20261002';
+import { StoryView } from './story.js?v=poem-scroll-20261002';
 import { clamp, smooth, damp, mulberry } from './math.js';
 import { createGLHelpers } from './gl.js';
-import { loadCatalog } from './catalog.js?v=chapter-lines-20261002';
+import { loadCatalog } from './catalog.js?v=poem-scroll-20261002';
 import { loadTextures } from './photos.js';
-import { buildStories, NF } from './stories.js?v=chapter-lines-20261002';
+import { buildStories, NF } from './stories.js?v=poem-scroll-20261002';
 import { IDLE, FIBRE_VS, FIBRE_FS, FLOOR_VS, FLOOR_FS, POST_VS, DOWN_FS, UP_FS, BLUR_FS, COMPOSITE_FS } from './shaders.js';
 
 const canvas = document.getElementById('stream');

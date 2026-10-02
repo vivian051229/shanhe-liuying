@@ -270,7 +270,7 @@ export class StoryView {
       const dt = Math.min(0.05, (now - last) / 1000); last = now;
       const flowing = this.el.classList.contains('unfolded') && !this.paused && !REDUCED && this.lb.hidden;
       const hold = this.hovering && !this.drag;
-      this.drift = damp(this.drift, flowing && !hold ? (this.stories[this.index]?.kind === 'poem' ? 0 : -DRIFT) : 0, hold ? 5 : 1.6, dt);
+      this.drift = damp(this.drift, flowing && !hold ? (this.stories[this.index]?.kind === 'poem' ? -18 : -DRIFT) : 0, hold ? 5 : 1.6, dt);
       if (!this.drag) { this.target += (this.drift + this.vel) * dt; this.vel *= Math.exp(-dt * 3); }
 
       this.offset = damp(this.offset, this.target, this.drag ? 30 : 9, dt);

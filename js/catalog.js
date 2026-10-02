@@ -52,6 +52,6 @@ export async function loadCatalog() {
     if (!response.ok) throw new Error(`Could not load ${path} (${response.status}).`);
     return response.json();
   };
-  const [catalog, data] = await Promise.all([read('./photos.json'), read('./stories.json?v=chapter-lines-20261002')]);
+  const [catalog, data] = await Promise.all([read('./photos.json'), read('./stories.json?v=poem-scroll-20261002')]);
   return validateCatalog(catalog, data);
 }
