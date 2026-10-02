@@ -588,11 +588,44 @@ async function boot() {
     document.querySelector('#enter-stream .entry-label').textContent = '循光而入';
     await new Promise(resolve => document.getElementById('enter-stream').addEventListener('click', resolve, { once: true }));
   }
-  opening.hidden = true;
+  // Carry the same lettering from the opening to its final waterfall position.
+  const sharedEntry = !location.hash.startsWith('#/story/') && !REDUCED;
+  let flyingTitle;
+  let titleMotion;
+  const destination = document.querySelector('.masthead .title-lettering');
+  if (sharedEntry) {
+    const source = opening.querySelector('#opening-title img');
+    const from = source.getBoundingClientRect();
+    const to = destination.getBoundingClientRect();
+    flyingTitle = source.cloneNode();
+    flyingTitle.removeAttribute('id');
+    flyingTitle.setAttribute('aria-hidden', 'true');
+    Object.assign(flyingTitle.style, {
+      position: 'fixed', left: `${from.left}px`, top: `${from.top}px`,
+      width: `${from.width}px`, height: `${from.height}px`, margin: '0',
+      zIndex: '85', pointerEvents: 'none', transformOrigin: '0 0',
+      filter: 'brightness(0) invert(1)'
+    });
+    document.body.appendChild(flyingTitle);
+    source.style.visibility = 'hidden';
+    destination.style.visibility = 'hidden';
+    opening.style.pointerEvents = 'none';
+    opening.animate([{ opacity: 1 }, { opacity: 0 }], {
+      duration: 680, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'forwards'
+    }).finished.then(() => { opening.hidden = true; });
+    titleMotion = flyingTitle.animate([
+      { transform: 'translate(0,0) scale(1)' },
+      { transform: `translate(${to.left - from.left}px,${to.top - from.top}px) scale(${to.width / from.width},${to.height / from.height})` }
+    ], { duration: 1250, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'forwards' });
+  } else opening.hidden = true;
   body.classList.remove('opening-torch');
   body.classList.add('ready');
   last = performance.now();
   requestAnimationFrame(frame);
+  if (titleMotion) titleMotion.finished.then(() => {
+    destination.style.visibility = '';
+    flyingTitle.remove();
+  });
   view.route(); // a shared link opens straight into its story
   window.__undertow = { cam, stories, fib, get hover() { return hover; }, pickLine, chapterAt, project, unproject, openStory, zoomBy, LS_MIN, LS_MAX, get slot() { return SLOT; } };
 }
