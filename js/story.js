@@ -119,9 +119,9 @@ export class StoryView {
     document.body.classList.add('story-open');
     this.onShow(index);
     el.classList.add('on', 'poured');                       // backdrop darkens, the thread pours down
-    this.later(() => el.classList.add('centered'), 560);   // …and glides to the centre
-    this.later(() => this.unfold(0), 1180);                // …and opens into its photographs
-    this.later(() => this.onCovered(), 1000);
+    this.later(() => el.classList.add('centered'), 320);   // …and glides to the centre
+    this.later(() => this.unfold(0), 650);                // …and opens into its photographs
+    this.later(() => this.onCovered(), 560);
     this.back.focus({ preventScroll: true, focusVisible: false });
     this.drift = 0;
     this.loop();
@@ -154,8 +154,8 @@ export class StoryView {
     const order = this.nodes.filter(n => n.y > -n.h && n.y < innerHeight).sort((a, b) => a.y - b.y);
     this.resetDelays();
     order.forEach((n, r) => {
-      n.frame.style.transitionDelay = `${base + r * 110}ms`;
-      if (n.entry) n.entry.style.transitionDelay = `${base + r * 110 + 520}ms`;
+      n.frame.style.transitionDelay = `${base + r * 45}ms`;
+      if (n.entry) n.entry.style.transitionDelay = `${base + r * 45 + 180}ms`;
     });
     this.el.classList.add('unfolded');
     this.later(() => this.resetDelays(), base + order.length * 110 + 1800);

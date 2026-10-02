@@ -19,6 +19,28 @@ export async function loadTextures(gl, photos, onProgress) {
   // Initialize neutral images so the curtain can render before downloads complete.
   ctx.fillStyle = '#160d0b';ctx.fillRect(0,0,LAYER*2,LAYER*2);
   for(let i=0;i<depth;i++) gl.texSubImage3D(gl.TEXTURE_2D_ARRAY,0,0,0,i,LAYER*2,LAYER*2,1,gl.RGBA,gl.UNSIGNED_BYTE,scratch);
+  // Four photos share one download, already arranged for a single GPU upload.
+  const hasAtlases = photos.every((p,i) => p.previewAtlas && p.previewAtlasCell === i % 4 && (i % 4 === 0 || p.previewAtlas === photos[i-i%4].previewAtlas));
+  if (hasAtlases) {
+    const queue = Array.from({length:depth}, (_,i)=>i);
+    let loaded = 0;
+    const worker = async () => {
+      while(queue.length) {
+        const layer = queue.shift();
+        try {
+          const img = await decode(photos[layer*4].previewAtlas);
+          ctx.clearRect(0,0,LAYER*2,LAYER*2);ctx.drawImage(img,0,0,LAYER*2,LAYER*2);
+          const active=gl.getParameter(gl.ACTIVE_TEXTURE);
+          gl.activeTexture(gl.TEXTURE4);gl.bindTexture(gl.TEXTURE_2D_ARRAY,arrTex);
+          gl.texSubImage3D(gl.TEXTURE_2D_ARRAY,0,0,0,layer,LAYER*2,LAYER*2,1,gl.RGBA,gl.UNSIGNED_BYTE,scratch);
+          gl.activeTexture(active);
+        } catch(err) {console.warn(err.message);}
+        onProgress(++loaded/depth);
+      }
+    };
+    void Promise.all(Array.from({length:8},worker));
+    return arrTex;
+  }
   scratch.width = scratch.height = LAYER;
   let done = 0;
   const queue = photos.map((_, i) => i);
