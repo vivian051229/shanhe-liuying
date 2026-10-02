@@ -11,12 +11,12 @@
 // half-float buffer, with a mirrored, blurred copy for the floor, a mip-chain bloom, and a
 // final tone-mapping pass.
 
-import { StoryView } from './story.js?v=poem-wire-20261002';
+import { StoryView } from './story.js?v=chronology-20261002';
 import { clamp, smooth, damp, mulberry } from './math.js';
 import { createGLHelpers } from './gl.js';
-import { loadCatalog } from './catalog.js';
+import { loadCatalog } from './catalog.js?v=chronology-20261002';
 import { loadTextures } from './photos.js';
-import { buildStories, NF } from './stories.js';
+import { buildStories, NF } from './stories.js?v=chronology-20261002';
 import { IDLE, FIBRE_VS, FIBRE_FS, FLOOR_VS, FLOOR_FS, POST_VS, DOWN_FS, UP_FS, BLUR_FS, COMPOSITE_FS } from './shaders.js';
 
 const canvas = document.getElementById('stream');
@@ -152,6 +152,11 @@ function openStory(i, { chapter = null, x = null } = {}) {
   if (i < 0 || view.isOpen || stories[i]?.kind === 'light') return;
   const sx = x ?? project(fib.x0[i], CH * 0.5).x;
   pluck.line = i; pluck.age = 0; pluck.amp = 0.12 * motion;
+  if (chapter !== null && stories[i].gallery) {
+    const photo = stories[i].chapters[chapter]?.photo;
+    const orderedIndex = stories[i].gallery.findIndex(c => c.photo === photo);
+    if (orderedIndex >= 0) chapter = orderedIndex;
+  }
   view.open(i, { chapter, x: clamp(sx, 0, W) });
 }
 function onStoryShow(i) {

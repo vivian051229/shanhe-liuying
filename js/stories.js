@@ -18,8 +18,10 @@ export function buildStories(photos, authored = [], journal = [], curated = fals
       const gcd = (a, b) => b ? gcd(b, a % b) : a;
       let stride = 17; while (gcd(stride, all.length) !== 1) stride++;
       const offset = (i * stride) % all.length;
-      const gallery = all.slice(offset).concat(all.slice(0, offset));
-      stories[i] = { ...source, id: `line-${i + 1}`, line: i, kind: 'mosaic', nav_hidden: true, chapters: gallery.slice(0, MAX_CHAPTERS), gallery };
+      const gallery = all;
+      const indices = Array.from({length:Math.min(MAX_CHAPTERS, all.length)}, (_, k) => (offset + k) % all.length).sort((a,b) => a-b);
+      const previews = indices.map(k => all[k]);
+      stories[i] = { ...source, id: `line-${i + 1}`, line: i, kind: 'mosaic', nav_hidden: true, chapters: previews, gallery };
       continue;
     }
     const source = authored.length ? authored[i % authored.length] : null;

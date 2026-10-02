@@ -179,8 +179,8 @@ export class StoryView {
     const pv = r >= 0 ? routes[mod(r - 1, routes.length)] : routes[0], nx = r >= 0 ? routes[mod(r + 1, routes.length)] : routes[0];
     this.prev.style.setProperty('--c', pv.rgb); this.prev.setAttribute('aria-label', `上一个故事：${pv.title}`);
     this.next.style.setProperty('--c', nx.rgb); this.next.setAttribute('aria-label', `下一个故事：${nx.title}`);
-    // Top to bottom the newest moment comes first, so as the column flows down the story plays forward.
-    this.chapters = (s.gallery ?? s.chapters).map((c, i) => ({ ...c, i })).reverse();
+    // Read from top to bottom in chronological order.
+    this.chapters = (s.gallery ?? s.chapters).map((c, i) => ({ ...c, i }));
     this.layout();
     this.centre(chapter ?? 0, false);
   }
@@ -270,7 +270,7 @@ export class StoryView {
       const dt = Math.min(0.05, (now - last) / 1000); last = now;
       const flowing = this.el.classList.contains('unfolded') && !this.paused && !REDUCED && this.lb.hidden;
       const hold = this.hovering && !this.drag;
-      this.drift = damp(this.drift, flowing && !hold ? (this.stories[this.index]?.kind === 'poem' ? 0 : DRIFT) : 0, hold ? 5 : 1.6, dt);
+      this.drift = damp(this.drift, flowing && !hold ? (this.stories[this.index]?.kind === 'poem' ? 0 : -DRIFT) : 0, hold ? 5 : 1.6, dt);
       if (!this.drag) { this.target += (this.drift + this.vel) * dt; this.vel *= Math.exp(-dt * 3); }
 
       this.offset = damp(this.offset, this.target, this.drag ? 30 : 9, dt);
