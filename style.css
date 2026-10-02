@@ -280,3 +280,6 @@ body:not(.ready) #loader i{animation:loading-stroke 1.6s cubic-bezier(.2,.75,.15
 #opening .opening-flashlight{position:fixed;inset:0;z-index:5;pointer-events:none;background:rgba(0,0,0,.18);transition:opacity .3s;--light-x:50vw;--light-y:40vh}
 #opening.has-flashlight .opening-flashlight{background:radial-gradient(circle 270px at var(--light-x) var(--light-y),rgba(0,0,0,0) 0%,rgba(0,0,0,.025) 24%,rgba(0,0,0,.13) 52%,rgba(0,0,0,.34) 84%,rgba(0,0,0,.38) 100%)}
 @media(hover:none),(pointer:coarse){#opening .opening-flashlight{display:none}}
+
+#opening.has-flashlight .opening-flashlight{background:radial-gradient(circle 235px at var(--light-x) var(--light-y),transparent 0%,rgba(0,0,0,.01) 25%,rgba(0,0,0,.2) 52%,rgba(0,0,0,.52) 82%,rgba(0,0,0,.57) 100%)}
+@media(hover:hover) and (pointer:fine){body.opening-torch #cursor{z-index:90;opacity:1}#opening,#opening *{cursor:none!important}}

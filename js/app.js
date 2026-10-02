@@ -36,6 +36,8 @@ openingLightHost.addEventListener('pointermove', event => {
   if (event.pointerType === 'touch' || openingLightHost.hidden) return;
   openingLightX = event.clientX; openingLightY = event.clientY;
   openingLightHost.classList.add('has-flashlight');
+  body.classList.add('opening-torch');
+  document.getElementById('cursor').style.transform = `translate3d(${event.clientX}px,${event.clientY}px,0)`;
   if (openingLightFrame) return;
   openingLightFrame = requestAnimationFrame(() => {
     openingLight.style.setProperty('--light-x', `${openingLightX}px`);
@@ -43,7 +45,10 @@ openingLightHost.addEventListener('pointermove', event => {
     openingLightFrame = 0;
   });
 });
-openingLightHost.addEventListener('pointerleave', () => openingLightHost.classList.remove('has-flashlight'));
+openingLightHost.addEventListener('pointerleave', () => {
+  openingLightHost.classList.remove('has-flashlight');
+  body.classList.remove('opening-torch');
+});
 
 const $ = s => document.querySelector(s);
 const $loader = $('#loader i'), $meter = $('#meter'), $cursor = $('#cursor'), $announce = $('#announce');
@@ -584,6 +589,7 @@ async function boot() {
     await new Promise(resolve => document.getElementById('enter-stream').addEventListener('click', resolve, { once: true }));
   }
   opening.hidden = true;
+  body.classList.remove('opening-torch');
   body.classList.add('ready');
   last = performance.now();
   requestAnimationFrame(frame);
