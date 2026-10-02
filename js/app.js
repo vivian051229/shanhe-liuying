@@ -11,12 +11,12 @@
 // half-float buffer, with a mirrored, blurred copy for the floor, a mip-chain bloom, and a
 // final tone-mapping pass.
 
-import { StoryView } from './story.js?v=fast-reading-20261002';
+import { StoryView } from './story.js?v=instant-preview-20261002';
 import { clamp, smooth, damp, mulberry } from './math.js';
 import { createGLHelpers } from './gl.js';
-import { loadCatalog } from './catalog.js?v=fast-reading-20261002';
-import { loadTextures } from './photos.js?v=fast-previews-20261002';
-import { buildStories, NF } from './stories.js?v=fast-reading-20261002';
+import { loadCatalog } from './catalog.js?v=instant-preview-20261002';
+import { loadTextures } from './photos.js?v=instant-preview-20261002';
+import { buildStories, NF } from './stories.js?v=instant-preview-20261002';
 import { IDLE, FIBRE_VS, FIBRE_FS, FLOOR_VS, FLOOR_FS, POST_VS, DOWN_FS, UP_FS, BLUR_FS, COMPOSITE_FS } from './shaders.js?v=fast-previews-20261002';
 
 const canvas = document.getElementById('stream');

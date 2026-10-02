@@ -19,6 +19,36 @@ export async function loadTextures(gl, photos, onProgress) {
   // Initialize neutral images so the curtain can render before downloads complete.
   ctx.fillStyle = '#160d0b';ctx.fillRect(0,0,LAYER*2,LAYER*2);
   for(let i=0;i<depth;i++) gl.texSubImage3D(gl.TEXTURE_2D_ARRAY,0,0,0,i,LAYER*2,LAYER*2,1,gl.RGBA,gl.UNSIGNED_BYTE,scratch);
+  // Bundle existing WebP bytes unchanged: six requests, with no extra compression.
+  const bundles = new Map();
+  if (photos.every(p => p.previewBundle)) {
+    for(let i=0;i<photos.length;i+=4) {
+      const p=photos[i];
+      if(!bundles.has(p.previewBundle)) bundles.set(p.previewBundle,[]);
+      bundles.get(p.previewBundle).push({layer:Math.floor(i/4),p});
+    }
+    let done=0;
+    const upload = img => {
+      ctx.clearRect(0,0,512,512);ctx.drawImage(img,0,0,512,512);
+    };
+    void Promise.all([...bundles].map(async ([src,layers]) => {
+      let data;
+      try {const response=await fetch(src);if(!response.ok)throw new Error('Preview bundle unavailable');data=await response.arrayBuffer();} catch(err) {console.warn(err.message);}
+      for(const {layer,p} of layers) {
+        let url;
+        try {
+          url=data ? URL.createObjectURL(new Blob([data.slice(p.previewBundleOffset,p.previewBundleOffset+p.previewBundleLength)],{type:'image/webp'})) : p.previewAtlas;
+          const img=await decode(url);upload(img);
+          const active=gl.getParameter(gl.ACTIVE_TEXTURE);
+          gl.activeTexture(gl.TEXTURE4);gl.bindTexture(gl.TEXTURE_2D_ARRAY,arrTex);
+          gl.texSubImage3D(gl.TEXTURE_2D_ARRAY,0,0,0,layer,512,512,1,gl.RGBA,gl.UNSIGNED_BYTE,scratch);
+          gl.activeTexture(active);
+        } catch(err) {console.warn(err.message);} finally {if(data && url)URL.revokeObjectURL(url);}
+        onProgress(++done/depth);
+      }
+    }));
+    return arrTex;
+  }
   // Four photos share one download, already arranged for a single GPU upload.
   const hasAtlases = photos.every((p,i) => p.previewAtlas && p.previewAtlasCell === i % 4 && (i % 4 === 0 || p.previewAtlas === photos[i-i%4].previewAtlas));
   if (hasAtlases) {
