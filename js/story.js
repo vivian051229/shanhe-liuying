@@ -202,13 +202,15 @@ export class StoryView {
     this.nodes = [];
     const first = this.chapters.map(c => {
       const w = c.kind === 'poem' ? Math.round(clamp(vw * 0.065, 44, 76)) : Math.round(c.aspect < 1 ? base * 0.72 : base);
-      const h = Math.round(w / c.aspect);
+      const glyphs = c.kind === 'poem' ? [...(c.text || '')].filter(char => /[\u4e00-\u9fff]/.test(char)) : [];
+      const letterSize = Math.min(44, w * .7), letterStep = letterSize * 1.65;
+      const h = c.kind === 'poem' ? Math.ceil(glyphs.length * letterStep + 32) : Math.round(w / c.aspect);
       const el = document.createElement('div');
       el.className = c.kind === 'poem' ? 'item poem-item' : 'item';
       el.style.width = `${w}px`;
       el.innerHTML = `
         <button class="shot" type="button" data-i="${c.i}" style="height:${h}px" aria-label="${esc(c.caption || '长征照片')}，点击放大">
-          <span class="frame"><img alt="${esc(c.caption)}" decoding="async" loading="lazy" src="${esc(c.src)}"></span>
+          <span class="frame">${c.kind === 'poem' ? `<span class="reading-poem" style="--letter-size:${letterSize}px;--letter-step:${letterStep}px" aria-label="${esc(c.text)}">${glyphs.map(char => `<span>${esc(char)}</span>`).join('')}</span>` : `<img alt="${esc(c.caption)}" decoding="async" loading="lazy" src="${esc(c.src)}">`}</span>
         </button>
         ${c.text || c.date ? `<div class="entry ${c.i % 2 ? 'right' : 'left'}">
           ${c.date ? `<span class="date">${esc(c.date)}</span>` : ''}
@@ -268,7 +270,7 @@ export class StoryView {
       const dt = Math.min(0.05, (now - last) / 1000); last = now;
       const flowing = this.el.classList.contains('unfolded') && !this.paused && !REDUCED && this.lb.hidden;
       const hold = this.hovering && !this.drag;
-      this.drift = damp(this.drift, flowing && !hold ? (this.stories[this.index]?.kind === 'poem' ? -DRIFT : DRIFT) : 0, hold ? 5 : 1.6, dt);
+      this.drift = damp(this.drift, flowing && !hold ? (this.stories[this.index]?.kind === 'poem' ? 0 : DRIFT) : 0, hold ? 5 : 1.6, dt);
       if (!this.drag) { this.target += (this.drift + this.vel) * dt; this.vel *= Math.exp(-dt * 3); }
 
       this.offset = damp(this.offset, this.target, this.drag ? 30 : 9, dt);
